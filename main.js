@@ -1,78 +1,106 @@
-import { app, BrowserWindow, screen, dialog } from "electron";
-import path from "path";
-import { fileURLToPath } from "url";
+const { app, BrowserWindow, dialog, screen, ipcMain } = require("electron");
+const { autoUpdater } = require("electron-updater");
+const path = require("path");
 
-import("electron-updater").then(({ default: updater }) => {
-  const autoUpdater = updater.autoUpdater;
+// Enable hot-reloading in development mode
+if (process.env.NODE_ENV === "development") {
+  require("electron-reload")(path.join(__dirname), {
+    electron: require.resolve("electron"),
+  });
+}
 
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
+let mainWindow;
 
-  import("electron-reload").then(({ default: reload }) => {
-    reload(__dirname, {
-      electron: path.join(__dirname, "node_modules", ".bin", "electron"),
-    });
+// Create main application window
+function createMainWindow() {
+  const { bounds } = screen.getPrimaryDisplay(); // Get full screen bounds
+
+  mainWindow = new BrowserWindow({
+    x: bounds.x,
+    y: bounds.y,
+    width: bounds.width,
+    height: bounds.height,
+    frame: false, // Standard window frame
+    transparent: false,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: false, // Keep secure
+      contextIsolation: true,
+      preload: path.join(__dirname, "public", "preload.js"), // Secure preload script
+    },
   });
 
-  let mainWindow;
+  mainWindow.webContents.session.clearCache();
+  mainWindow.loadFile(path.join(__dirname, "public", "index.html"));
 
-  app.whenReady().then(() => {
-
-    const { bounds } = screen.getPrimaryDisplay(); // Get full screen bounds
-
-    mainWindow = new BrowserWindow({
-      x: bounds.x,
-      y: bounds.y,
-      width: bounds.width,
-      height: bounds.height,
-      webPreferences: {
-        nodeIntegration: false,
-        contextIsolation: true,
-      },
-    });
-
-    mainWindow.webContents.session.clearCache();
-    mainWindow.loadFile(path.join(__dirname, "public", "index.html"));
-
-    mainWindow.on("closed", () => {
-      mainWindow = null;
-    });
-
-    setTimeout(() => checkForUpdates(autoUpdater), 5000); // Delay update check for stability
+  mainWindow.on("closed", () => {
+    mainWindow = null;
   });
 
-  app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") {
-      app.quit();
+  setTimeout(() => checkForUpdates(), 5000); // Delay update check
+}
+
+// Window Control Handlers (Placed Outside `createMainWindow`)
+ipcMain.on("minimize-window", () => {
+  if (mainWindow) mainWindow.minimize();
+});
+
+ipcMain.on("maximize-window", () => {
+  if (mainWindow) {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize(); // Restore to normal size
+    } else {
+      mainWindow.maximize();
     }
-  });
-
-  function checkForUpdates(autoUpdater) {
-    autoUpdater.on("update-available", () => {
-      dialog.showMessageBox({
-        type: "info",
-        title: "Update Available",
-        message: "A new version is available. Downloading now...",
-      });
-    });
-
-    autoUpdater.on("update-downloaded", () => {
-      dialog
-        .showMessageBox({
-          type: "info",
-          title: "Update Ready",
-          message: "Update downloaded. The app will restart to install the update.",
-        })
-        .then(() => {
-          autoUpdater.quitAndInstall();
-        });
-    });
-
-    autoUpdater.on("error", (error) => {
-      console.error("Update error:", error);
-    });
-
-    // ✅ Check for updates
-    autoUpdater.checkForUpdatesAndNotify();
   }
 });
+
+ipcMain.on("close-window", () => {
+  if (mainWindow) mainWindow.close();
+});
+
+// Check for updates
+function checkForUpdates() {
+  autoUpdater.on("update-available", () => {
+    dialog.showMessageBox({
+      type: "info",
+      title: "Update Available",
+      message: "A new version is available. Downloading now...",
+    });
+  });
+
+  autoUpdater.on("update-downloaded", () => {
+    dialog
+      .showMessageBox({
+        type: "info",
+        title: "Update Ready",
+        message: "Update downloaded. The app will restart to install the update.",
+      })
+      .then(() => {
+        autoUpdater.quitAndInstall();
+      });
+  });
+
+  autoUpdater.on("error", (error) => {
+    console.error("Update error:", error.message);
+  });
+
+  autoUpdater.checkForUpdatesAndNotify();
+}
+
+// Quit the app when all windows are closed
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
+
+// Handle app activation on macOS
+app.on("activate", () => {
+  if (mainWindow === null) {
+    createMainWindow();
+  }
+});
+
+// Wait for Electron to be ready before creating the window
+app.whenReady().then(createMainWindow);
