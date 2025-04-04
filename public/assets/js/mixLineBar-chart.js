@@ -37,6 +37,20 @@ function initializeMixLineBarChart() {
       data: ['Evaporation', 'Precipitation', 'Temperature'],
       left: '0'
     },
+    dataZoom: [
+      {
+        show: true,
+        realtime: true,
+        start: 65,
+        end: 85
+      },
+      {
+        type: 'inside',
+        realtime: true,
+        start: 65,
+        end: 85
+      }
+    ],
     xAxis: [
       {
         type: 'category',

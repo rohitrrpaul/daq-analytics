@@ -31,6 +31,20 @@ function initializeYAxisChart() {
       data: ['Evaporation', 'Precipitation', 'Temperature'],
       left: '-5',
     },
+    dataZoom: [
+      {
+        show: true,
+        realtime: true,
+        start: 65,
+        end: 85
+      },
+      {
+        type: 'inside',
+        realtime: true,
+        start: 65,
+        end: 85
+      }
+    ],
     xAxis: [{
       type: 'category',
       axisTick: { alignWithLabel: true },
