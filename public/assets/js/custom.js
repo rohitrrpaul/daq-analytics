@@ -129,17 +129,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showSidebarSection(activeSidebar) {
-      sidebarSections.forEach(id => {
-          const section = document.getElementById(id);
-          if (section) {
-              if (id === activeSidebar) {
-                  section.classList.remove("hide-div");
-              } else {
-                  section.classList.add("hide-div");
-              }
-          }
-      });
+    // Hide/show relevant section
+    sidebarSections.forEach(id => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.classList.toggle("hide-div", id !== activeSidebar);
+      }
+    });
+  
+    // Remove 'active' class from all nav links
+    document.querySelectorAll(".nav-link").forEach(link => {
+      link.classList.remove("active");
+    });
+  
+    // Add 'active' to the clicked link (based on sidebar ID convention)
+    const activeLink = document.querySelector(`#${activeSidebar}-click`);
+    if (activeLink) {
+      activeLink.classList.add("active");
+    }
   }
+  
 
   // Show 'activation' when 'submit-login' is clicked
   document.getElementById("submit-login")?.addEventListener("click", function (event) {

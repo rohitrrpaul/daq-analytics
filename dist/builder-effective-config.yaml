@@ -1,0 +1,37 @@
+directories:
+  output: dist
+  buildResources: assets
+appId: com.daq.analytics
+productName: DAQ Analytics
+asar: true
+files:
+  - filter:
+      - '**/*'
+      - '!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}'
+      - '!node_modules/*/{test,__tests__,tests,powered-test,example,examples}'
+      - '!node_modules/.bin'
+      - '!**/*.map'
+      - '!**/*.ts'
+extraResources:
+  - from: public/
+    to: public
+publish:
+  - provider: github
+    repo: daq-analytics
+    owner: rohitrrpaul
+    releaseType: draft
+win:
+  target: nsis
+  icon: assets/icon.png
+  requestedExecutionLevel: requireAdministrator
+mac:
+  target: dmg
+  icon: assets/icon.icns
+linux:
+  target: AppImage
+  icon: assets/icon.png
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+electronVersion: 35.0.2

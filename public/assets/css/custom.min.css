@@ -72,6 +72,11 @@ background: #222328;
 	margin-right: 15px;
 	border-radius: 0 !important;
    }
+
+   .nav-link.active {
+    background-color: #222328 !important;
+    color: #FFF !important;
+  }
    
    .navbar-header .btn-topbar:last-child {
 	margin-right: 0;
