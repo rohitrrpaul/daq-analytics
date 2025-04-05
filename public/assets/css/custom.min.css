@@ -1,3 +1,7 @@
+html, body {
+	overflow: hidden; /* ✨ Prevent main window scroll */
+  }  
+
 .chkb-mb-7{
 	margin-bottom: 7px;
 }
@@ -13,6 +17,29 @@ background: #222328;
 .page-title-box {
     padding: 0 0 15px 0;
 }
+
+.scrollbar {
+	height: calc(100vh - 60px); /* adjust 60px to account for header/footer if needed */
+	overflow-y: auto;
+	padding-right: 10px;
+  }
+/* Works on Chrome, Edge, Safari */
+.scrollbar::-webkit-scrollbar {
+	width: 8px;
+  }
+  
+ .scrollbar::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 4px;
+  }
+  
+.scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+  }
+ .scrollbar {
+	overflow: auto;
+  }
+	  
 
 @media (min-width: 991px) {
 	.navbar-header {
