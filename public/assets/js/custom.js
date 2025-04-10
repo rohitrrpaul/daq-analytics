@@ -101,6 +101,20 @@ function closeAllSelect(elmnt) {
 document.addEventListener("click", closeAllSelect);
 
 document.addEventListener("DOMContentLoaded", function () {
+
+  const sensorElement = document.getElementById("sensor-data");
+
+  if (window.electron && typeof window.electron.onSerialData === "function") {
+    window.electron.onSerialData((data) => {
+      console.log("Received serial data:", data); // for debugging
+      if (sensorElement) {
+        sensorElement.innerText = `Pressure: ${data}`;
+      }
+    });
+  } else {
+    console.error("window.electron.onSerialData is not available");
+  }
+
   // Main sections
   const mainSections = ["login", "activation", "pages-with-side-bar"];
   

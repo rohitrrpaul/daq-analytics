@@ -14,13 +14,16 @@
   "license": "ISC",
   "description": "DAQ Analytics is a powerful data acquisition tool.",
   "dependencies": {
+    "@serialport/parser-readline": "^13.0.0",
     "axios": "^1.8.3",
     "electron-updater": "^6.3.9",
+    "modbus-serial": "^8.0.20-no-serial-port",
+    "serialport": "^13.0.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "electron-builder": "^26.0.12",
     "electron": "^35.0.2",
+    "electron-builder": "^26.0.12",
     "electron-reload": "^2.0.0-alpha.1"
   },
   "build": {

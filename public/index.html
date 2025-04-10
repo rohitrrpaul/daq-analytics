@@ -155,6 +155,8 @@
                                     </div>
                                 </form>
                             </div>
+                            <div id="sensor-data">Waiting for sensor reading...</div>
+
                         </div>
                         <!-- end card body -->
                     </div>
@@ -387,6 +389,11 @@
                                             </li>
 
                                             <li class="nav-item">
+                                                <a href="javascript:void(0)" id="downhold-data-click" class="nav-link">
+                                                    Downhold Data</a>
+                                            </li>
+
+                                            <li class="nav-item">
                                                 <a href="javascript:void(0)" id="licence-validity-click"
                                                     class="nav-link">
                                                     Licence Validity </a>
@@ -397,10 +404,6 @@
                                                     Software Version </a>
                                             </li>
 
-                                            <li class="nav-item">
-                                                <a href="javascript:void(0)" id="downhold-data-click" class="nav-link">
-                                                    Downhold Data</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </li>
@@ -945,7 +948,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0">Edit Sensor Mapping</h4>
+                                    <h4 class="mb-sm-0">Sensor Mapping</h4>
                                 </div>
                             </div>
                         </div>
@@ -972,114 +975,7 @@
                                                             Temperature </label>
                                                     </div>
                                                 </div>
-                                                <div class="card bg-light p-3  mt-3 sensor-fields-block">
-                                                    <div class="block">
-                                                        <p class="fs-6 fw-bold">1 x Pressure</p>
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Density of
-                                                                        Gas</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Enter Density of Gas">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">API Gravity of oil
-                                                                    </label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="API Gravity of oil">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Water cut in oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Water cut in oil line">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Choke Bean
-                                                                        Size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Choke Bean Size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Orifice
-                                                                        size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Orifice size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Meter factor oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Meter factor oil line">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="block">
-                                                        <p class="fs-6 fw-bold">1 x Temperature</p>
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Density of
-                                                                        Gas</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Enter Density of Gas">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">API Gravity of oil
-                                                                    </label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="API Gravity of oil">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Water cut in oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Water cut in oil line">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Choke Bean
-                                                                        Size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Choke Bean Size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Orifice
-                                                                        size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Orifice size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Meter factor oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Meter factor oil line">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             <div class="sensor-block">
                                                 <h4 class="card-title fs-5  mb-3">SSV Upstream </h4>
@@ -1092,61 +988,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="card bg-light p-3  mt-3 sensor-fields-block">
-                                                    <div class="block">
-                                                        <p class="fs-6 fw-bold">1 x Pressure</p>
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Density of
-                                                                        Gas</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Enter Density of Gas">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">API Gravity of oil
-                                                                    </label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="API Gravity of oil">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Water cut in oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Water cut in oil line">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Choke Bean
-                                                                        Size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Choke Bean Size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Orifice
-                                                                        size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Orifice size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Meter factor oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Meter factor oil line">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             <div class="sensor-block">
                                                 <h4 class="card-title fs-5  mb-3">SSV Downstream </h4>
@@ -1159,61 +1001,7 @@
                                                             Pressure </label>
                                                     </div>
                                                 </div>
-                                                <div class="card bg-light p-3  mt-3 sensor-fields-block">
-                                                    <div class="block">
-                                                        <p class="fs-6 fw-bold">1 x Pressure</p>
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Density of
-                                                                        Gas</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Enter Density of Gas">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">API Gravity of oil
-                                                                    </label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="API Gravity of oil">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Water cut in oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Water cut in oil line">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Choke Bean
-                                                                        Size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Choke Bean Size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Orifice
-                                                                        size</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Orifice size">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4 col-sm-6">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="">Meter factor oil
-                                                                        line</label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        placeholder="Meter factor oil line">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                             <div class="sensor-block">
                                                 <h4 class="card-title fs-5  mb-3">Well Head Desander </h4>
@@ -2769,28 +2557,28 @@
                                     <div class="col-md-6">
                                         <div class="card bg-light-subtle border border-info-subtle">
                                             <div class="card-body">
-                                                <div class="chart" id="rainfallChart"></div>
+                                                <div class="chart" id="chart_1"></div>
                                             </div>
                                         </div>
                                     </div> <!-- col end-->
                                     <div class="col-md-6">
                                         <div class="card bg-light-subtle border border-info-subtle">
                                             <div class="card-body">
-                                                <div class="chart" id="multipleYAxisChart"></div>
+                                                <div class="chart" id="chart_2"></div>
                                             </div>
                                         </div>
                                     </div> <!-- col end-->
                                     <div class="col-md-6">
                                         <div class="card bg-light-subtle border border-info-subtle">
                                             <div class="card-body">
-                                                <div class="chart" id="mixLineBarChart"></div>
+                                                <div class="chart" id="chart_3"></div>
                                             </div>
                                         </div>
                                     </div> <!-- col end-->
                                     <div class="col-md-6">
                                         <div class="card bg-light-subtle border border-info-subtle">
                                             <div class="card-body">
-                                                <div class="chart" id="lineRaceChart"></div>
+                                                <div class="chart" id="chart_4"></div>
                                             </div>
                                         </div>
                                     </div> <!-- col end-->
@@ -3145,9 +2933,9 @@
         <script src="assets/js/custom.js"></script>
         
         <!-- <script type="text/javascript" src="assets/js/echart.js"></script> -->
-        <script src="assets/js/rainfall-chart.js"></script>
+        <!-- <script src="assets/js/rainfall-chart.js"></script>
         <script src="assets/js/multipleYAxis-chart.js"></script>
-        <script src="assets/js/mixLineBar-chart.js"></script>
+        <script src="assets/js/mixLineBar-chart.js"></script> -->
         <script src="assets/js/lineRace-chart.js"></script>
         <script src="./renderer.js"></script>
 

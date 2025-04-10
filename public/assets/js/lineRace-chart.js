@@ -1,288 +1,139 @@
-// var dom = document.getElementById('lineRaceChart');
-// var myChart = echarts.init(dom, null, {
-//   renderer: 'canvas',
-//   useDirtyRect: false
-// });
-// var app = {};
-// var ROOT_PATH = 'https://echarts.apache.org/examples';
-// var option;
 
-// $.get(
-// ROOT_PATH + '/data/asset/data/life-expectancy-table.json',
-// function (_rawData) {
-// run(_rawData);
-// }
-// );
-// function run(_rawData) {
-// // var countries = ['Australia', 'Canada', 'China', 'Cuba', 'Finland', 'France', 'Germany', 'Iceland', 'India', 'Japan', 'North Korea', 'South Korea', 'New Zealand', 'Norway', 'Poland', 'Russia', 'Turkey', 'United Kingdom', 'United States'];
-// const countries = [
-// 'Finland',
-// 'France',
-// 'Germany',
-// 'Iceland',
-// 'Norway',
-// 'Poland',
-// 'Russia',
-// 'United Kingdom'
-// ];
-// const datasetWithFilters = [];
-// const seriesList = [];
-// echarts.util.each(countries, function (country) {
-// var datasetId = 'dataset_' + country;
-// datasetWithFilters.push({
-//   id: datasetId,
-//   fromDatasetId: 'dataset_raw',
-//   transform: {
-//     type: 'filter',
-//     config: {
-//       and: [
-//         { dimension: 'Year', gte: 1950 },
-//         { dimension: 'Country', '=': country }
-//       ]
-//     }
+// function createChart(containerId, data, chartTitle) {
+//   const dom = document.getElementById(containerId);
+
+//   if (!dom) {
+//     console.warn(`Chart container '${containerId}' not found`);
+//     return;
 //   }
-// });
-// seriesList.push({
-//   type: 'line',
-//   datasetId: datasetId,
-//   showSymbol: false,
-//   name: country,
-//   endLabel: {
-//     show: true,
-//     formatter: function (params) {
-//       return params.value[3] + ': ' + params.value[0];
-//     }
-//   },
-//   labelLayout: {
-//     moveOverlap: 'shiftY'
-//   },
-//   emphasis: {
-//     focus: 'series'
-//   },
-//   encode: {
-//     x: 'Year',
-//     y: 'Income',
-//     label: ['Country', 'Income'],
-//     itemName: 'Year',
-//     tooltip: ['Income']
+
+//   if (dom.clientWidth === 0 || dom.clientHeight === 0) {
+//     console.warn(`Waiting for valid size for '${containerId}'...`);
+//     setTimeout(() => createChart(containerId, data, chartTitle), 500);
+//     return;
 //   }
-// });
-// });
-// option = {
-// animationDuration: 10000,
-// dataset: [
-//   {
-//     id: 'dataset_raw',
-//     source: _rawData
-//   },
-//   ...datasetWithFilters
-// ],
-// title: {
-//   text: 'Income of Germany and France since 1950'
-// },
-// tooltip: {
-//   order: 'valueDesc',
-//   trigger: 'axis'
-// },
-// xAxis: {
-//   type: 'category',
-//   nameLocation: 'middle'
-// },
-// yAxis: {
-//   name: 'Income'
-// },
-// grid: {
-//   right: 140
-// },
-// series: seriesList
-// };
-// myChart.setOption(option);
-// }
 
-// if (option && typeof option === 'object') {
-//   myChart.setOption(option);
-// }
+//   const myChart = echarts.init(dom);
 
-// window.addEventListener('resize', myChart.resize);
+//   const countries = [...new Set(data.map(d => d.Country))];
+//   const datasetWithFilters = [];
+//   const seriesList = [];
 
-// var dom = document.getElementById('lineRaceChart');
-//     var myChart = echarts.init(dom, null, {
-//       renderer: 'canvas',
-//       useDirtyRect: false
+//   echarts.util.each(countries, function (country) {
+//     const datasetId = `dataset_${country}_${containerId}`;
+//     datasetWithFilters.push({
+//       id: datasetId,
+//       fromDatasetId: 'dataset_raw',
+//       transform: {
+//         type: 'filter',
+//         config: {
+//           and: [
+//             { dimension: 'Year', gte: 1950 },
+//             { dimension: 'Country', '=': country }
+//           ]
+//         }
+//       }
 //     });
 
-//     // ✅ JSON data manually embedded (instead of AJAX request)
-//     var jsonData = [
-//       { "Country": "Germany", "Year": 1950, "Income": 15000 },
-//       { "Country": "Germany", "Year": 1960, "Income": 18000 },
-//       { "Country": "Germany", "Year": 1970, "Income": 22000 },
-//       { "Country": "France", "Year": 1950, "Income": 14000 },
-//       { "Country": "France", "Year": 1960, "Income": 17500 },
-//       { "Country": "France", "Year": 1970, "Income": 21000 }
-//     ];
+//     seriesList.push({
+//       type: 'line',
+//       datasetId,
+//       showSymbol: false,
+//       name: country,
+//       endLabel: {
+//         show: true,
+//         formatter: () => country
+//       },
+//       labelLayout: { moveOverlap: 'shiftY' },
+//       emphasis: { focus: 'series' },
+//       encode: {
+//         x: 'Year',
+//         y: 'Income',
+//         label: ['Country', 'Income'],
+//         itemName: 'Year',
+//         tooltip: ['Income']
+//       }
+//     });
+//   });
 
-//     function run(_rawData) {
-//       const countries = ["Germany", "France"];
-//       const datasetWithFilters = [];
-//       const seriesList = [];
+//   const option = {
+//     animationDuration: 2000,
+//     dataset: [
+//       { id: 'dataset_raw', source: data },
+//       ...datasetWithFilters
+//     ],
+//     title: { text: chartTitle },
+//     tooltip: { order: 'valueDesc', trigger: 'axis' },
+//     xAxis: { type: 'category', name: 'Year' },
+//     yAxis: { name: 'Income' },
+//     grid: { right: 140 },
+//     dataZoom: [
+//       { show: true, realtime: true, start: 65, end: 85 },
+//       { type: 'inside', realtime: true, start: 65, end: 85 }
+//     ],
+//     series: seriesList
+//   };
 
-//       echarts.util.each(countries, function (country) {
-//         var datasetId = 'dataset_' + country;
-//         datasetWithFilters.push({
-//           id: datasetId,
-//           fromDatasetId: 'dataset_raw',
-//           transform: {
-//             type: 'filter',
-//             config: {
-//               and: [
-//                 { dimension: 'Year', gte: 1950 },
-//                 { dimension: 'Country', '=': country }
-//               ]
-//             }
-//           }
-//         });
+//   myChart.setOption(option);
+//   window.addEventListener('resize', () => myChart.resize());
+// }
 
-//         seriesList.push({
-//           type: 'line',
-//           datasetId: datasetId,
-//           showSymbol: false,
-//           name: country,
-//           endLabel: {
-//             show: true,
-//             formatter: function (params) {
-//               return country; // ✅ FIXED: params.value[2] is 'Income'
-//             }
-//           },
-//           labelLayout: { moveOverlap: 'shiftY' },
-//           emphasis: { focus: 'series' },
-//           encode: {
-//             x: 'Year',
-//             y: 'Income',
-//             label: ['Country', 'Income'],
-//             itemName: 'Year',
-//             tooltip: ['Income']
-//           }
-//         });
-//       });
+// // Chart 1
+// function initChart1() {
+//   const data = [
+//     { Country: "Germany", Year: 1950, Income: 15000 },
+//     { Country: "Germany", Year: 1960, Income: 18000 },
+//     { Country: "Germany", Year: 1970, Income: 22000 },
+//     { Country: "France", Year: 1950, Income: 700 },
+//     { Country: "France", Year: 1960, Income: 5500 },
+//     { Country: "France", Year: 1970, Income: 100 }
+//   ];
+//   createChart("chart_1", data, "Chart 1: Germany vs France");
+// }
 
-//       var option = {
-//         animationDuration: 5000,
-//         dataset: [
-//           { id: 'dataset_raw', source: _rawData },
-//           ...datasetWithFilters
-//         ],
-//         title: { text: 'Income of Germany and France since 1950' },
-//         tooltip: { order: 'valueDesc', trigger: 'axis' },
-//         xAxis: { type: 'category', name: 'Year' },
-//         yAxis: { name: 'Income' },
-//         grid: { right: 140 },
-//         series: seriesList
-//       };
+// // Chart 2
+// function initChart2() {
+//   const data = [
+//     { Country: "USA", Year: 1950, Income: 25000 },
+//     { Country: "USA", Year: 1960, Income: 30000 },
+//     { Country: "USA", Year: 1970, Income: 35000 },
+//     { Country: "UK", Year: 1950, Income: 20000 },
+//     { Country: "UK", Year: 1960, Income: 24000 },
+//     { Country: "UK", Year: 1970, Income: 29000 }
+//   ];
+//   createChart("chart_2", data, "Chart 2: USA vs UK");
+// }
 
-//       myChart.setOption(option);
-//     }
+// // Chart 3
+// function initChart3() {
+//   const data = [
+//     { Country: "India", Year: 1950, Income: 5000 },
+//     { Country: "India", Year: 1960, Income: 8000 },
+//     { Country: "India", Year: 1970, Income: 12000 },
+//     { Country: "China", Year: 1950, Income: 4000 },
+//     { Country: "China", Year: 1960, Income: 7000 },
+//     { Country: "China", Year: 1970, Income: 11000 }
+//   ];
+//   createChart("chart_3", data, "Chart 3: India vs China");
+// }
 
-//     // ✅ Directly pass local JSON data to the function
-//     run(jsonData);
+// // Chart 4
+// function initChart4() {
+//   const data = [
+//     { Country: "Japan", Year: 1950, Income: 16000 },
+//     { Country: "Japan", Year: 1960, Income: 21000 },
+//     { Country: "Japan", Year: 1970, Income: 26000 },
+//     { Country: "South Korea", Year: 1950, Income: 13000 },
+//     { Country: "South Korea", Year: 1960, Income: 19000 },
+//     { Country: "South Korea", Year: 1970, Income: 24000 }
+//   ];
+//   createChart("chart_4", data, "Chart 4: Japan vs South Korea");
+// }
 
-//     window.addEventListener('resize', myChart.resize);
-
-var jsonData = [
-  { "Country": "Germany", "Year": 1950, "Income": 15000 },
-  { "Country": "Germany", "Year": 1960, "Income": 18000 },
-  { "Country": "Germany", "Year": 1970, "Income": 22000 },
-  { "Country": "France", "Year": 1950, "Income": 14000 },
-  { "Country": "France", "Year": 1960, "Income": 17500 },
-  { "Country": "France", "Year": 1970, "Income": 21000 }
-];
-
-function initChart() {
-  var dom = document.getElementById('lineRaceChart');
-
-  // Ensure width and height are valid
-  if (dom.clientWidth === 0 || dom.clientHeight === 0) {
-    console.warn("Waiting for valid container size...");
-    setTimeout(initChart, 500); // Retry after 500ms
-    return;
-  }
-
-  var myChart = echarts.init(dom);
-
-  function run(_rawData) {
-    const countries = ["Germany", "France"];
-    const datasetWithFilters = [];
-    const seriesList = [];
-
-    echarts.util.each(countries, function (country) {
-      var datasetId = 'dataset_' + country;
-      datasetWithFilters.push({
-        id: datasetId,
-        fromDatasetId: 'dataset_raw',
-        transform: {
-          type: 'filter',
-          config: {
-            and: [
-              { dimension: 'Year', gte: 1950 },
-              { dimension: 'Country', '=': country }
-            ]
-          }
-        }
-      });
-
-      seriesList.push({
-        type: 'line',
-        datasetId: datasetId,
-        showSymbol: false,
-        name: country,
-        endLabel: {
-          show: true,
-          formatter: function () {
-            return country;
-          }
-        },
-        labelLayout: { moveOverlap: 'shiftY' },
-        emphasis: { focus: 'series' },
-        encode: {
-          x: 'Year',
-          y: 'Income',
-          label: ['Country', 'Income'],
-          itemName: 'Year',
-          tooltip: ['Income']
-        }
-      });
-    });
-
-    var option = {
-      animationDuration: 5000,
-      dataset: [{ id: 'dataset_raw', source: _rawData }, ...datasetWithFilters],
-      dataZoom: [
-        {
-          show: true,
-          realtime: true,
-          start: 65,
-          end: 85
-        },
-        {
-          type: 'inside',
-          realtime: true,
-          start: 65,
-          end: 85
-        }
-      ],
-      title: { text: 'Income of Germany and France since 1950' },
-      tooltip: { order: 'valueDesc', trigger: 'axis' },
-      xAxis: { type: 'category', name: 'Year' },
-      yAxis: { name: 'Income' },
-      grid: { right: 140 },
-      series: seriesList
-    };
-
-    myChart.setOption(option);
-    window.addEventListener('resize', () => myChart.resize());
-  }
-
-  run(jsonData);
-}
-
-// Ensure chart is initialized properly
-window.addEventListener('load', initChart);
+// // Load all charts on window load
+// window.addEventListener('load', () => {
+//   initChart1();
+//   initChart2();
+//   initChart3();
+//   initChart4();
+// });

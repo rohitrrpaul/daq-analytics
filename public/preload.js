@@ -4,4 +4,6 @@ contextBridge.exposeInMainWorld("electron", {
   minimize: () => ipcRenderer.send("minimize-window"),
   maximize: () => ipcRenderer.send("maximize-window"),
   close: () => ipcRenderer.send("close-window"),
+
+  onSerialData: (callback) => ipcRenderer.on("serial-data", (event, data) => callback(data))
 });
