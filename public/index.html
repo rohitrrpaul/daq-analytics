@@ -155,7 +155,6 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div id="sensor-data">Waiting for sensor reading...</div>
 
                             </div>
                             <!-- end card body -->
@@ -1055,27 +1054,25 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th scope="row"><a href="#" class="fw-medium">30001</a></th>
-                                                                        <td>32767</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th scope="row"><a href="#" class="fw-medium">30002</a></th>
-                                                                        <td>32767</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th scope="row"><a href="#" class="fw-medium">30003</a></th>
-                                                                        <td>32</td>
-                                                                        
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th scope="row"><a href="#" class="fw-medium">30004</a></th>
-                                                                        <td>32767</td>
-                                                                        
+                                                                        <td colspan="2" style="color: red; text-align:left;">Please configure inputs and click on Scan.</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
+                                                            <div id="table-loader-overlay" style="
+                                                                display: none;
+                                                                position: absolute;
+                                                                top: 0; left: 0;
+                                                                width: 100%; height: 100%;
+                                                                background-color: rgba(0, 0, 0, 0.6);
+                                                                z-index: 10;
+                                                                align-items: center;
+                                                                justify-content: center;
+                                                                pointer-events: none;
+                                                            ">
+                                                                <div class="spinner-border text-light" role="status">
+                                                                <span class="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                 
                                                     </div><!-- end card-body -->
@@ -1090,7 +1087,7 @@
                                         <button type="button" class="btn btn-ghost-danger" data-bs-dismiss="modal">Discard</button>
                         
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-success">Scan</button>
+                                            <button type="button" class="btn btn-success" id="scanBtn">Connect</button>
                                         </div>
                                     </div>
                                 </div><!-- /.modal-content -->

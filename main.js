@@ -3,14 +3,16 @@ const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const ModbusRTU = require("modbus-serial");
 
+let mainWindow;
+let modbusClient = null;
+let pollingInterval = null;
+
 // Enable hot-reloading in development mode
 if (process.env.NODE_ENV === "development") {
   require("electron-reload")(path.join(__dirname), {
     electron: require.resolve("electron"),
   });
 }
-
-let mainWindow;
 
 // Create main application window
 function createMainWindow() {
@@ -39,9 +41,14 @@ function createMainWindow() {
     mainWindow = null;
   });
 
+  ipcMain.on("modbus-config", (event, config) => {
+    console.log("⚙️ Received dynamic Modbus config:", config);
+    connectModbusRTU(config);
+  });
+
   setTimeout(() => {
     // checkForUpdates(); // Optional if updates needed
-    connectModbusRTU();
+    // connectModbusRTU();
   }, 5000);
 }
 
@@ -93,38 +100,58 @@ function checkForUpdates() {
   autoUpdater.checkForUpdatesAndNotify();
 }
 
-// Modbus RTU communication on COM3
-function connectModbusRTU() {
-  const client = new ModbusRTU();
+async function connectModbusRTU(config) {
+  if (modbusClient) {
+    try {
+      await modbusClient.close(); // Wait until fully closed
+      console.log("🔌 Previous Modbus connection closed.");
+    } catch (e) {
+      console.warn("⚠️ Failed to close previous Modbus client:", e.message);
+    }
+  }
 
-  client.connectRTUBuffered("COM3", {
-    baudRate: 9600,
-    dataBits: 8,
-    stopBits: 1,
-    parity: "odd",
-  })
-    .then(() => {
-      console.log("✅ Modbus connection established on COM3");
-      client.setID(1); // Default device ID
-      client.setTimeout(1000);
+  modbusClient = new ModbusRTU();
 
-      setInterval(() => {
-        client.readInputRegisters(0, 16)
-          .then((data) => {
-            console.log("📡 Modbus Input Registers:", data.data);
-            if (mainWindow) {
-              mainWindow.webContents.send("serial-data", data.data);
-            }
-          })
-          .catch((err) => {
-            console.error("❌ Error reading input registers:", err.message);
-          });
-      }, 2000);
-    })
-    .catch((err) => {
-      console.error("❌ Failed to connect to COM3:", err.message);
+  try {
+    await modbusClient.connectRTUBuffered(config.port, {
+      baudRate: config.baudrate,
+      dataBits: config.dataBits,
+      stopBits: config.stopBits,
+      parity: config.parity || "none",
     });
+
+    console.log(`✅ Modbus connection established on ${config.port}`);
+    modbusClient.setID(1);
+    modbusClient.setTimeout(config.timeout || 1000);
+    mainWindow.webContents.send("modbus-connected", true);
+
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
+      pollingInterval = null;
+    }
+
+    pollingInterval = setInterval(() => {
+      modbusClient.readInputRegisters(0, config.length || 16)
+        .then((data) => {
+          console.log("📡 Modbus Input Registers:", data.data);
+          mainWindow.webContents.send("serial-data", data.data);
+        })
+        .catch((err) => {
+          isModbusConnected = false;
+          mainWindow.webContents.send("modbus-connected", false);
+          mainWindow.webContents.send("modbus-connection-error", err.message); // ✅ this line
+          console.error("❌ Error reading input registers:", err.message);
+        });
+    }, 2000);
+
+  } catch (err) {
+    isModbusConnected = false;
+    mainWindow.webContents.send("modbus-connected", false);
+    mainWindow.webContents.send("modbus-connection-error", err.message); // ✅ this line
+    console.error(`❌ Failed to connect to ${config.port}:`, err.message);
+  }
 }
+
 
 // App lifecycle
 app.on("window-all-closed", () => {

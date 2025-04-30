@@ -103,19 +103,80 @@ document.addEventListener("click", closeAllSelect);
 document.addEventListener("DOMContentLoaded", function () {
 
   const sensorElement = document.getElementById("sensor-data");
+  let isModbusConnected = false;
+  let modbusAddressMap = {};
+  const loaderOverlay = document.getElementById("table-loader-overlay");
+  const scanBtn = document.getElementById("scanBtn");
+  const formInputs = document.querySelectorAll("#sensorForm input, #sensorForm select");
 
-  if (window.electron && typeof window.electron.onSerialData === "function") {
-    window.electron.onSerialData((data) => {
-      console.log("Received serial data:", data); // for debugging
-      if (sensorElement) {
-        var pressure_reading = data[2];
-        var flow_rate = data[4]
-        sensorElement.innerText = `Temperature: ${pressure_reading}` + ` Flow Rate: ${flow_rate}`;
-      }
+  // Disable Scan button when clicked
+  scanBtn?.addEventListener("click", () => {
+    scanBtn.disabled = true;
+  });
+
+  // Re-enable Scan button when any form input changes
+  formInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      scanBtn.disabled = false;
     });
-  } else {
-    console.error("window.electron.onSerialData is not available");
-  }
+
+    input.addEventListener("change", () => {
+      scanBtn.disabled = false;
+    });
+  });
+
+  window.electron.onModbusConnection((status) => {
+    isModbusConnected = status;
+  });
+
+  window.electron.onModbusConnectionError((errorMessage) => {
+    
+    loaderOverlay.style.display = "none";
+    const tbody = document.querySelector(".table tbody");
+    if (!tbody) return;
+  
+    tbody.innerHTML = ""; // Clear any previous data
+    const errorRow = document.createElement("tr");
+    errorRow.innerHTML = `
+      <td colspan="2" style="color: red; text-align: left;">❌ Error! Please reconfigure and try again later.</td>
+    `;
+    tbody.appendChild(errorRow);
+  });
+
+  window.electron.onSerialData((data) => {
+    loaderOverlay.style.display = "none";
+    const tbody = document.querySelector(".table tbody");
+    if (!tbody) return;
+  
+    tbody.innerHTML = "";
+    modbusAddressMap = {};
+  
+    const lastAddress = parseInt(document.getElementById("lastAddress")?.value);
+    const length = parseInt(document.getElementById("length")?.value);
+  
+    if (isNaN(lastAddress) || isNaN(length)) {
+      const errorRow = document.createElement("tr");
+      errorRow.innerHTML = `
+        <td colspan="2" style="color: red; text-align: left;">⚠️ Invalid last address or length</td>
+      `;
+      tbody.appendChild(errorRow);
+      return;
+    }
+  
+    for (let i = 0; i < length && i < data.length; i++) {
+      const currentAddress = lastAddress + i;
+      const value = data[i];
+  
+      modbusAddressMap[currentAddress] = value;
+  
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <th scope="row"><a href="#" class="fw-medium">${currentAddress}</a></th>
+        <td>${value}</td>
+      `;
+      tbody.appendChild(row);
+    }
+  });  
 
   // Main sections
   const mainSections = ["login", "activation", "pages-with-side-bar"];
@@ -165,7 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
   
-
   // Show 'activation' when 'submit-login' is clicked
   document.getElementById("submit-login")?.addEventListener("click", function (event) {
       event.preventDefault();
@@ -176,6 +236,40 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("submit-licence-key")?.addEventListener("click", function (event) {
       event.preventDefault();
       showMainSection("pages-with-side-bar");
+  });
+
+  document.querySelector(".modal-footer .btn-success")?.addEventListener("click", function () {
+
+    loaderOverlay.style.display = "flex";
+
+    const config = {
+      port: document.getElementById("port").value,
+      baudrate: parseInt(document.getElementById("baudrate").value),
+      length: parseInt(document.getElementById("length").value),
+      dataBits: parseInt(document.getElementById("dataBits").value),
+      parity: document.getElementById("parity").value,
+      stopBits: parseInt(document.getElementById("stopBits").value),
+      timeout: parseInt(document.getElementById("timeout").value),
+      lastAddress: parseInt(document.getElementById("lastAddress").value),
+    };
+
+    // ✅ Simple front-end validation
+    if (
+      !config.port ||
+      isNaN(config.baudrate) ||
+      isNaN(config.length) ||
+      isNaN(config.dataBits) ||
+      !config.parity ||
+      isNaN(config.stopBits) ||
+      isNaN(config.timeout) ||
+      isNaN(config.lastAddress)
+    ) {
+      alert("Please fill all required Modbus fields correctly.");
+      return;
+    }
+  
+    console.log("📨 Sending config to main process:", config);
+    window.electron.sendModbusConfig(config);
   });
 
   // Sidebar navigation event listeners
