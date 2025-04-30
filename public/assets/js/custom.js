@@ -108,7 +108,9 @@ document.addEventListener("DOMContentLoaded", function () {
     window.electron.onSerialData((data) => {
       console.log("Received serial data:", data); // for debugging
       if (sensorElement) {
-        sensorElement.innerText = `Pressure: ${data}`;
+        var pressure_reading = data[2];
+        var flow_rate = data[4]
+        sensorElement.innerText = `Temperature: ${pressure_reading}` + ` Flow Rate: ${flow_rate}`;
       }
     });
   } else {
