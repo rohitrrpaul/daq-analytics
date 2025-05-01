@@ -338,22 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return results;
   }
   
-  // ✅ On "Check Values" button click
-  // document.getElementById("check_value")?.addEventListener("click", function () {
-  //   const sensorData = getCheckedSensorValues();
-  //   console.log("✅ Checked Sensor Data:", sensorData);
-
-  //   // Optional: Show in alert or UI
-  //   if (sensorData.length === 0) {
-  //     alert("No sensors selected.");
-  //   } else {
-  //     let output = "Checked Sensors:\n";
-  //     sensorData.forEach(({ label, value, unit }) => {
-  //       output += `• ${label} → ${value} ${unit}\n`;
-  //     });
-  //     alert(output);
-  //   }
-  // });
+  // On "Check Values" button click
   document.getElementById("check_value")?.addEventListener("click", function () {
     const checkboxes = document.querySelectorAll("input.form-check-input:checked");
     const sensorData = [];

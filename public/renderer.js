@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ DOM fully loaded!");
+    // console.log("✅ DOM fully loaded!");
 
     // Select all buttons with the class names
     const minimizeBtns = document.querySelectorAll(".minimize-window");
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeBtns = document.querySelectorAll(".close-window");
 
     if (minimizeBtns.length > 0) {
-        console.log("✅ Minimize buttons found!");
+        // console.log("✅ Minimize buttons found!");
         minimizeBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
                 window.electron.minimize();
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (maximizeBtns.length > 0) {
-        console.log("✅ Maximize buttons found!");
+        // console.log("✅ Maximize buttons found!");
         maximizeBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
                 window.electron.maximize();
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (closeBtns.length > 0) {
-        console.log("✅ Close buttons found!");
+        // console.log("✅ Close buttons found!");
         closeBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
                 window.electron.close();
