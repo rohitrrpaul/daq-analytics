@@ -1111,18 +1111,18 @@
                                         <div class="card-body form-steps">
                                             <form action="#">
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">Flow head / Well Head</h4>
+                                                    <h4 class="card-title fs-5  mb-3">SSV/Flowhead</h4>
                                                     <div class="row">
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
                                                             <input class="form-check-input" type="checkbox" value=""
                                                                 id="flowHeadOneXPressure">
-                                                            <label class="form-check-label" for="flowHeadOneXPressure">WHP</label>
+                                                            <label class="form-check-label" for="flowHeadOneXPressure">Flowhead Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
                                                                   type="number"
                                                                   class="form-control"
                                                                   min="0"
-                                                                  data-unit="PSI"
+                                                                  data-params='{"unit": "psi", "long": "Flowhead Pressure", "annotation": "FWHP"}'
                                                                   placeholder="Enter Address">
                                                                   
                                                             </div>
@@ -1130,27 +1130,13 @@
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
                                                             <input class="form-check-input" type="checkbox" value=""
                                                                 id="flowHeadOneXTemperature">
-                                                            <label class="form-check-label" for="flowHeadOneXTemperature">WHT</label>
+                                                            <label class="form-check-label" for="flowHeadOneXTemperature">Flowhead Temperature</label>
                                                                 <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                     <input
                                                                       type="number"
                                                                       class="form-control"
                                                                       min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="flowHeadAnallusPressure">
-                                                            <label class="form-check-label" for="flowHeadAnallusPressure">Ann. Pr.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
+                                                                      data-params='{"unit": "deg C", "long": "Flowhead Temperature", "annotation": "FWHT"}'
                                                                       placeholder="Enter Address">
                                                                       
                                                                 </div>
@@ -1159,811 +1145,686 @@
                                                     
                                                 </div>
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">SSV Upstream </h4>
+                                                    <h4 class="card-title fs-5 mb-3">Wellhead Pressure</h4>
                                                     <div class="row">
+                                                        <!-- Wellhead Pressure -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="SSVOneXPressure">
-                                                            <label class="form-check-label" for="SSVOneXPressure"> 1 x
-                                                                Pressure
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="wellheadPressure">
+                                                            <label class="form-check-label" for="wellheadPressure">Wellhead Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="PSI"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Wellhead Pressure", "annotation": "WHP"}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">SSV Downstream </h4>
-                                                    <div class="row">
+                                                
+                                                        <!-- Wellhead Temperature -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="SSVDownstreamOneXPressure">
-                                                            <label class="form-check-label" for="SSVDownstreamOneXPressure">
-                                                                1 x
-                                                                Pressure </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">Well Head Desander </h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="WellHeadOneXPressure">
-                                                            <label class="form-check-label" for="WellHeadOneXPressure"> 1 x
-                                                                Pressure
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="wellheadTemp">
+                                                            <label class="form-check-label" for="wellheadTemp">Wellhead Temperature</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="PSI"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Wellhead Temperature", "annotation": "WHT"}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Annulus Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="annulusPressure">
+                                                            <label class="form-check-label" for="annulusPressure">Annulus Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Annulus Pressure", "annotation": "Ann. Pr."}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">Sand filter </h4>
+                                                    <h4 class="card-title fs-5 mb-3">Sand Filter</h4>
                                                     <div class="row">
+                                                        <!-- Sand Filter Upstream Pressure -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="sandFilterOneXPressure">
-                                                            <label class="form-check-label" for="sandFilterOneXPressure">SF U/S</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="sandFilterOneXPressureDownstream">
-                                                            <label class="form-check-label"
-                                                                for="sandFilterOneXPressureDownstream">SF D/S</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="sandFilterOneXDp">
-                                                            <label class="form-check-label" for="sandFilterOneXDp">SF DP C</label>
+                                                            <input class="form-check-input" type="checkbox" id="sandFilterUpstream">
+                                                            <label class="form-check-label" for="sandFilterUpstream">Sand Filter Upstream Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="WC"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Sand Filter Upstream Pressure", "annotation": "SF U/S"}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
+                                                
+                                                        <!-- Sand Filter Downstream Pressure -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="sandFilterDifferentialPressure">
-                                                            <label class="form-check-label"
-                                                                for="sandFilterDifferentialPressure">SF DP</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">Data header Upstream of Choke manifold
-                                                    </h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="dataHeaderOneXPressure">
-                                                            <label class="form-check-label" for="dataHeaderOneXPressure"> 1
-                                                                x
-                                                                Pressure </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="dataHeaderOneXTemperature">
-                                                            <label class="form-check-label" for="dataHeaderOneXTemperature">
-                                                                1 x
-                                                                Temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">Data header downstream of choke
-                                                        manifold
-                                                    </h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="dataHeaderDownOneXPressure">
-                                                            <label class="form-check-label"
-                                                                for="dataHeaderDownOneXPressure"> 1
-                                                                x
-                                                                Pressure </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="dataHeaderDownOneXTemperature">
-                                                            <label class="form-check-label"
-                                                                for="dataHeaderDownOneXTemperature">
-                                                                1 x
-                                                                Temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">Indirect Bath Heater</h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="IndirectBathOneXTemperature">
-                                                            <label class="form-check-label"
-                                                                for="IndirectBathOneXTemperature">IWBH U/S Temp.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="IndirectBathOneXDownstreamTemperature">
-                                                            <label class="form-check-label"
-                                                                for="IndirectBathOneXDownstreamTemperature">IWBH D/S Temp.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5  mb-3">Choke Manifold </h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="ChokeoneXPressure">
-                                                            <label class="form-check-label" for="ChokeoneXPressure">Choke U/S Pr.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="ChokeoneXTemperature">
-                                                            <label class="form-check-label" for="ChokeoneXTemperature">Choke U/S Temp.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="ChokeoneXDownstreamPressure">
-                                                            <label class="form-check-label"
-                                                                for="ChokeoneXDownstreamPressure">Choke D/S Pr.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="ChokeoneXDownstreamtemperature">
-                                                            <label class="form-check-label"
-                                                                for="ChokeoneXDownstreamtemperature">Choke D/S Temp.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">Steam Heat Exchanger </h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="SteamHeatoneXPressure">
-                                                            <label class="form-check-label" for="SteamHeatoneXPressure">Heat Exc. Pr.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="SteamHeatoneXDownstreamTemperature">
-                                                            <label class="form-check-label"
-                                                                for="SteamHeatoneXDownstreamTemperature">Heat Exc. Te.</label>
+                                                            <input class="form-check-input" type="checkbox" id="sandFilterDownstream">
+                                                            <label class="form-check-label" for="sandFilterDownstream">Sand Filter Downstream Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="Deg C"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Sand Filter Downstream Pressure", "annotation": "SF D/S"}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Sand Filter Differential Pressure Sensor -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sandFilterDP">
+                                                            <label class="form-check-label" for="sandFilterDP">Sand Filter Differential Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Sand Filter Differential Pressure", "annotation": "SF DP"}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">3 Phase Separator </h4>
+                                                    <h4 class="card-title fs-5 mb-3">Data Header Upstream of Choke Manifold</h4>
                                                     <div class="row">
+                                                        <!-- Data header upstream Pressure -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="threePhaseOneXStaticPressure">
-                                                            <label class="form-check-label"
-                                                                for="threePhaseOneXStaticPressure">Sep. Pressure</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="threePhaseOneXStaticTemperature">
-                                                            <label class="form-check-label"
-                                                                for="threePhaseOneXStaticTemperature">Sep. Temp.</label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="threePhaseOneXGasTemperature">
-                                                            <label class="form-check-label"
-                                                                for="threePhaseOneXGasTemperature">
-                                                                1 x
-                                                                Gas Temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="OneXGasPress">
-                                                            <label class="form-check-label" for="OneXGasPress"> 1 x Gas
-                                                                Pressure
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="dhUpstreamPressure">
+                                                            <label class="form-check-label" for="dhUpstreamPressure">Data header upstream Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="PSI"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Data header upstream Pressure", "annotation": "DH D/S Pr."}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
+                                                
+                                                        <!-- Data header upstream Temperature -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="threePhaseOneXGasPressure">
-                                                            <label class="form-check-label" for="threePhaseOneXGasPressure">
-                                                                2 x
-                                                                Differential Pressure Gas line </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXPressure">
-                                                            <label class="form-check-label" for="oneXPressure"> 1 x Gas flow
-                                                                meter
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="dhUpstreamTemp">
+                                                            <label class="form-check-label" for="dhUpstreamTemp">Data header upstream Temperature</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="BPD"
-                                                                  placeholder="Enter Address">
-                                                                  
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="twoXOilFlow">
-                                                            <label class="form-check-label" for="twoXOilFlow"> 2 x Oil Flow
-                                                                meter
-                                                            </label>
-                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="BPD"
-                                                                  placeholder="Enter Address">
-                                                                  
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXWaterFlow">
-                                                            <label class="form-check-label" for="oneXWaterFlow"> 1 x Water
-                                                                flow
-                                                                meter </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="BPD"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXOilTemp">
-                                                            <label class="form-check-label" for="oneXOilTemp"> 1 x Oil
-                                                                Temperature
-                                                            </label>
-                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="Deg C"
-                                                                  placeholder="Enter Address">
-                                                                  
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXLevelSensor3phase">
-                                                            <label class="form-check-label" for="oneXLevelSensor3phase"> 1 x Level
-                                                                sensor
-                                                                3 phase </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="mm"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXoilChamber">
-                                                            <label class="form-check-label" for="oneXoilChamber"> 1 x Level
-                                                                sensor
-                                                                oil chamber </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="mm"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXWaterCut">
-                                                            <label class="form-check-label" for="oneXWaterCut"> 1 x Water
-                                                                cut
-                                                                meter
-                                                                oil line </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="BPD"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">Surge tank</h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="SurgeOneXPressure">
-                                                            <label class="form-check-label" for="SurgeOneXPressure"> 1 x
-                                                                pressure </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="SurgeOneXTemperature">
-                                                            <label class="form-check-label" for="SurgeOneXTemperature"> 1 x
-                                                                temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXLevelSensor">
-                                                            <label class="form-check-label" for="oneXLevelSensor"> 1 x Level
-                                                                Sensor
-                                                            </label>
-                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="mm"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Data header upstream Temperature", "annotation": "DH D/S Temp."}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">Knock out drum</h4>
+                                                    <h4 class="card-title fs-5 mb-3">Data Header Downstream of Choke Manifold</h4>
                                                     <div class="row">
+                                                        <!-- Data header downstream Pressure -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="KODOneXPressure">
-                                                            <label class="form-check-label" for="KODOneXPressure"> 1 x
-                                                                pressure </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="KODOneXTemperature">
-                                                            <label class="form-check-label" for="KODOneXTemperature"> 1 x
-                                                                temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="KODoneXLevelSensor">
-                                                            <label class="form-check-label" for="KODoneXLevelSensor"> 1 x Level
-                                                                Sensor
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="dhDownstreamPressure">
+                                                            <label class="form-check-label" for="dhDownstreamPressure">Data header downstream Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="mm"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Data header downstream Pressure", "annotation": "DH U/S Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Data header downstream Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="dhDownstreamTemp">
+                                                            <label class="form-check-label" for="dhDownstreamTemp">Data header downstream Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Data header downstream Temperature", "annotation": "DH U/S Temp."}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">Storage tank</h4>
+                                                    <h4 class="card-title fs-5 mb-3">Choke Manifold</h4>
                                                     <div class="row">
+                                                        <!-- Choke Upstream Pressure -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="StorageOneXTemperature">
-                                                            <label class="form-check-label" for="StorageOneXTemperature"> 1 x
-                                                                temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="StorageoneXLevelSensor">
-                                                            <label class="form-check-label" for="StorageoneXLevelSensor"> 1 x Level
-                                                                Sensor
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="chokeUpstreamPressure">
+                                                            <label class="form-check-label" for="chokeUpstreamPressure">Choke Upstream Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="mm"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Choke Upstream Pressure", "annotation": "Choke U/S Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Choke Upstream Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="chokeUpstreamTemp">
+                                                            <label class="form-check-label" for="chokeUpstreamTemp">Choke Upstream Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Choke Upstream Temperature", "annotation": "Choke U/S Temp."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Choke Downstream Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="chokeDownstreamPressure">
+                                                            <label class="form-check-label" for="chokeDownstreamPressure">Choke Downstream Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Choke Downstream Pressure", "annotation": "Choke D/S Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Choke Downstream Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="chokeDownstreamTemp">
+                                                            <label class="form-check-label" for="chokeDownstreamTemp">Choke Downstream Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Choke Downstream Temperature", "annotation": "Choke D/S Temp."}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">Transfer pump Discharge</h4>
+                                                    <h4 class="card-title fs-5 mb-3">Indirect Water Bath Heater</h4>
                                                     <div class="row">
+                                                        <!-- IWBH Upstream Temperature -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="transferPumponeXPressure">
-                                                            <label class="form-check-label" for="transferPumponeXPressure">
-                                                                1 x
-                                                                Pressure Discharge </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">Production Header</h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="ProductionOneXPressure">
-                                                            <label class="form-check-label" for="ProductionOneXPressure"> 1
-                                                                x
-                                                                Pressure </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="PSI"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="ProductionOneXTemperature">
-                                                            <label class="form-check-label" for="ProductionOneXTemperature">
-                                                                1 x
-                                                                Temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">3 Way Manifold </h4>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXManifoldPressure">
-                                                            <label class="form-check-label" for="oneXManifoldPressure"> 1 x
-                                                                Pressure
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="iwbhUpstreamTemp">
+                                                            <label class="form-check-label" for="iwbhUpstreamTemp">IWBH Upstream Temperature</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="PSI"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "IWBH Upstream Temperature", "annotation": "IWBH U/S Temp."}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
+
+                                                        <!-- IWBH Downstream Temperature -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="oneXManifoldTemperature">
-                                                            <label class="form-check-label" for="oneXManifoldTemperature"> 1
-                                                                x
-                                                                Temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
+                                                            <input class="form-check-input" type="checkbox" id="iwbhDownstreamTemp">
+                                                            <label class="form-check-label" for="iwbhDownstreamTemp">IWBH Downstream Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "IWBH Downstream Temperature", "annotation": "IWBH D/S Temp."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="sensor-block">
-                                                    <h4 class="card-title fs-5 mb-3">5 Way Manifold </h4>
+                                                    <h4 class="card-title fs-5 mb-3">Heat Exchanger</h4>
                                                     <div class="row">
+                                                        <!-- Heat Exchanger Pressure -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="fiveWayOneXPressure">
-                                                            <label class="form-check-label" for="fiveWayOneXPressure"> 1 x
-                                                                Pressure
-                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" id="heatExchangerPressure">
+                                                            <label class="form-check-label" for="heatExchangerPressure">Heat Exchanger Pressure</label>
                                                             <div class="input-wrapper" style="display: none; margin-top: 4px;">
                                                                 <input
-                                                                  type="number"
-                                                                  class="form-control"
-                                                                  min="0"
-                                                                  data-unit="PSI"
-                                                                  placeholder="Enter Address">
-                                                                  
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Heat Exchanger Pressure", "annotation": "Heat Exc. Pr."}'
+                                                                    placeholder="Enter Address">
                                                             </div>
                                                         </div>
+                                                
+                                                        <!-- Heat Exchanger Temperature -->
                                                         <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="fiveWayOneXTemperature">
-                                                            <label class="form-check-label" for="fiveWayOneXTemperature"> 1
-                                                                x
-                                                                Temperature </label>
-                                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
-                                                                    <input
-                                                                      type="number"
-                                                                      class="form-control"
-                                                                      min="0"
-                                                                      data-unit="Deg C"
-                                                                      placeholder="Enter Address">
-                                                                      
-                                                                </div>
+                                                            <input class="form-check-input" type="checkbox" id="heatExchangerTemp">
+                                                            <label class="form-check-label" for="heatExchangerTemp">Heat Exchanger Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Heat Exchanger Temperature", "annotation": "Heat Exc. Te."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="sensor-block">
+                                                    <h4 class="card-title fs-5 mb-3">Production Fluid Header</h4>
+                                                    <div class="row">
+                                                        <!-- Fluid Header Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="fluidHeaderPressure">
+                                                            <label class="form-check-label" for="fluidHeaderPressure">Fluid Header Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Fluid Header Pressure", "annotation": "Fluid He. Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Fluid Header Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="fluidHeaderTemp">
+                                                            <label class="form-check-label" for="fluidHeaderTemp">Fluid Header Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Fluid Header Temperature", "annotation": "Fluid Temp. Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="sensor-block">
+                                                    <h4 class="card-title fs-5 mb-3">Surge Tank</h4>
+                                                    <div class="row">
+                                                        <!-- Surge Tank Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="surgeTankPressure">
+                                                            <label class="form-check-label" for="surgeTankPressure">Surge Tank Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Surge Tank Pressure", "annotation": "SUT Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Surge Tank Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="surgeTankTemp">
+                                                            <label class="form-check-label" for="surgeTankTemp">Surge Tank Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Surge Tank Temperature", "annotation": "SUT. Temp."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Liquid Level Chamber 1 -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="surgeTankLevel1">
+                                                            <label class="form-check-label" for="surgeTankLevel1">Surge tank Liquid Level Chamber-1</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "mm", "long": "Surge tank Liquid Level Chamber-1", "annotation": "SUT. Liq. Level-1"}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Liquid Level Chamber 2 -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="surgeTankLevel2">
+                                                            <label class="form-check-label" for="surgeTankLevel2">Surge tank Liquid Level Chamber-2</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "mm", "long": "Surge tank Liquid Level Chamber-2", "annotation": "SUT. Liq. Level-2"}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="sensor-block">
+                                                    <h4 class="card-title fs-5 mb-3">Knock Out Drum</h4>
+                                                    <div class="row">
+                                                        <!-- Knock out Drum Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="kodPressure">
+                                                            <label class="form-check-label" for="kodPressure">Knock out Drum Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Knock out Drum Pressure", "annotation": "KOD Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Knock out Drum Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="kodTemp">
+                                                            <label class="form-check-label" for="kodTemp">Knock out Drum Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Knock out Drum Temperature", "annotation": "KOD Temp."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Liquid Level Chamber 1 -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="kodLevel1">
+                                                            <label class="form-check-label" for="kodLevel1">Knock out Drum Liquid Level Chamber-1</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "mm", "long": "Knock out Drum Liquid Level Chamber-1", "annotation": "KOD Liq. Level-1"}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Liquid Level Chamber 2 -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="kodLevel2">
+                                                            <label class="form-check-label" for="kodLevel2">Knock out Drum Liquid Level Chamber-2</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "mm", "long": "Knock out Drum Liquid Level Chamber-2", "annotation": "KOD Liq. Level-2"}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="sensor-block">
+                                                    <h4 class="card-title fs-5 mb-3">Storage Tank</h4>
+                                                    <div class="row">
+                                                        <!-- Storage Tank Liquid Level Chamber -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="storageTankLevel">
+                                                            <label class="form-check-label" for="storageTankLevel">Storage Tank Liquid Level Chamber</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "mm", "long": "Storage Tank Liquid Level Chamber", "annotation": "STO Liq. Level"}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Storage Tank Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="storageTankTemp">
+                                                            <label class="form-check-label" for="storageTankTemp">Storage Tank Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Storage Tank Temperature", "annotation": "STO Temp."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="sensor-block">
+                                                    <h4 class="card-title fs-5 mb-3">Transfer Pump</h4>
+                                                    <div class="row">
+                                                        <!-- Pump Discharge Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="pumpDischargePressure">
+                                                            <label class="form-check-label" for="pumpDischargePressure">Pump Discharge Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Pump Discharge Pressure", "annotation": "Pump Dis. Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="sensor-block">
+                                                    <h4 class="card-title fs-5 mb-3">Diverter Manifold</h4>
+                                                    <div class="row">
+                                                        <!-- DM-1 Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="dm1Pressure">
+                                                            <label class="form-check-label" for="dm1Pressure">Diverter Manifold pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Diverter Manifold pressure", "annotation": "DM-1 Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- DM-1 Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="dm1Temp">
+                                                            <label class="form-check-label" for="dm1Temp">Diverter Manifold Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Diverter Manifold Temperature", "annotation": "DM-1 Temp."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- DM-2 Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="dm2Pressure">
+                                                            <label class="form-check-label" for="dm2Pressure">Diverter Manifold pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "psi", "long": "Diverter Manifold pressure", "annotation": "DM-2 Pr."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- DM-2 Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="dm2Temp">
+                                                            <label class="form-check-label" for="dm2Temp">Diverter Manifold Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    min="0"
+                                                                    data-params='{"unit": "deg C", "long": "Diverter Manifold Temperature", "annotation": "DM-2 Temp."}'
+                                                                    placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="sensor-block">
+                                                    <h4 class="card-title fs-5 mb-3">Separator</h4>
+                                                    <div class="row">
+                                                
+                                                        <!-- Static Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sepPressure">
+                                                            <label class="form-check-label" for="sepPressure">Static Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "psi", "long": "Static Pressure", "annotation": "Sep. Pressure"}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Static Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sepTemp">
+                                                            <label class="form-check-label" for="sepTemp">Static Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "deg C", "long": "Static Temperature", "annotation": "Sep. Temp."}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Differential Pressure -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sepDiffPr">
+                                                            <label class="form-check-label" for="sepDiffPr">Differential Pressure</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "psi", "long": "Differential Pressure", "annotation": "Sep. Diff. Pr."}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Gas Flow Meter -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="gasFlowMeter">
+                                                            <label class="form-check-label" for="gasFlowMeter">Gas Flow meter</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "bpd", "long": "Gas Flow meter", "annotation": "Gas Mtr."}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Separator Gas Line Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sepGasTemp">
+                                                            <label class="form-check-label" for="sepGasTemp">Separator Gas Line Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "deg C", "long": "Separator Gas Line Temperature", "annotation": "Sep. Gas Temp."}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Separator Oil Line Temperature -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sepOilLineTemp">
+                                                            <label class="form-check-label" for="sepOilLineTemp">Separator Oil Line Temperature</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "deg C", "long": "Separator Oil Line Temperature", "annotation": "Sep. Oil Line Temp."}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Water Cut Meter -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="waterCut">
+                                                            <label class="form-check-label" for="waterCut">Oil Line Water Cut Meter</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "percentage", "long": "Oil Line Water Cut Meter", "annotation": "Water cut"}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Separator Oil Chamber Level -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sepOilLevel">
+                                                            <label class="form-check-label" for="sepOilLevel">Separator Oil Chamber Level</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "mm", "long": "Separator Oil Chamber Level", "annotation": "Sep. Oil Level"}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Cumulative Oil Volume -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="cumOilVol">
+                                                            <label class="form-check-label" for="cumOilVol">Cumulative Oil Volume</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "bpd", "long": "Cumulative Oil Volume", "annotation": "Cum. Oil"}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Cumulative Water Volume -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="cumWaterVol">
+                                                            <label class="form-check-label" for="cumWaterVol">Cumulative Water Volume</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "bpd", "long": "Cumulative Water Volume", "annotation": "Cum. Water"}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Separator Water Chamber Level -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="sepWaterLevel">
+                                                            <label class="form-check-label" for="sepWaterLevel">Separator Water Chamber Level</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "mm", "long": "Separator Water Chamber Level", "annotation": "Sep. Water Level"}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <!-- Liquid Cumulative Volume -->
+                                                        <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                            <input class="form-check-input" type="checkbox" id="liqCumVol">
+                                                            <label class="form-check-label" for="liqCumVol">Liquid Cumulative Volume</label>
+                                                            <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                                <input type="number" class="form-control" min="0"
+                                                                       data-params='{"unit": "bpd", "long": "Liquid Cumulative Volume", "annotation": "Liquid cum. Vol."}'
+                                                                       placeholder="Enter Address">
+                                                            </div>
+                                                        </div>
+                                                
+                                                    </div>
+                                                </div>                                                                                                                                                                                                                                                                                                         
+                                                
                                                 <div>
                                                     <button type="button" class="btn btn-sm btn-info d-inline-flex align-items-center" id="check_value">Check Values</button>
                                                 </div>
@@ -3278,10 +3139,10 @@
                                 <div class="row d-flex align-items-center">
                                     <div class="col-lg-7">
                                         <div class="card-body">
-                                            <small class="d-flex mb-2 fw-2 fw-bold">Selected time </small>
+                                            <small class="d-flex mb-2 fw-2">Selected time </small>
                                             <span class="badge fs-5 rounded-pill bg-primary-subtle text-primary mb-3"> 01
                                             </span>
-                                            <small class="text-primary fw-bold">Minute</small>
+                                            <small class="text-primary">Minute</small>
                                             <p class="card-text text-muted mb-0">The Data Refresh Interval feature allows
                                                 you to
                                                 control how often data updates on your screen without requiring a manual

@@ -339,19 +339,60 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   // ✅ On "Check Values" button click
-  document.getElementById("check_value")?.addEventListener("click", function () {
-    const sensorData = getCheckedSensorValues();
-    console.log("✅ Checked Sensor Data:", sensorData);
+  // document.getElementById("check_value")?.addEventListener("click", function () {
+  //   const sensorData = getCheckedSensorValues();
+  //   console.log("✅ Checked Sensor Data:", sensorData);
 
-    // Optional: Show in alert or UI
+  //   // Optional: Show in alert or UI
+  //   if (sensorData.length === 0) {
+  //     alert("No sensors selected.");
+  //   } else {
+  //     let output = "Checked Sensors:\n";
+  //     sensorData.forEach(({ label, value, unit }) => {
+  //       output += `• ${label} → ${value} ${unit}\n`;
+  //     });
+  //     alert(output);
+  //   }
+  // });
+  document.getElementById("check_value")?.addEventListener("click", function () {
+    const checkboxes = document.querySelectorAll("input.form-check-input:checked");
+    const sensorData = [];
+  
+    let missingValue = false;
+    let missingLabel = "";
+  
+    checkboxes.forEach((checkbox) => {
+      const wrapper = checkbox.closest(".form-check");
+      const input = wrapper.querySelector(".input-wrapper input");
+  
+      if (!input) return;
+  
+      const params = JSON.parse(input.dataset.params || "{}");
+      const value = input.value.trim();
+  
+      if (!value) {
+        missingValue = true;
+        missingLabel = params.long || "Unnamed Sensor";
+        return;
+      }
+  
+      sensorData.push({
+        unit: params.unit || "",
+        long: params.long || "",
+        annotation: params.annotation || "",
+        value: value
+      });
+    });
+  
+    if (missingValue) {
+      alert(`Please enter a value for "${missingLabel}"`);
+      return;
+    }
+  
     if (sensorData.length === 0) {
       alert("No sensors selected.");
     } else {
-      let output = "Checked Sensors:\n";
-      sensorData.forEach(({ label, value, unit }) => {
-        output += `• ${label} → ${value} ${unit}\n`;
-      });
-      alert(output);
+      console.log("✅ Checked Sensor Data:", sensorData);
     }
   });
 
