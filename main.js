@@ -2,10 +2,13 @@ const { app, BrowserWindow, dialog, screen, ipcMain } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const ModbusRTU = require("modbus-serial");
+const { initializeDatabase } = require("./database/db"); 
+const db = initializeDatabase();
 
 let mainWindow;
 let modbusClient = null;
 let pollingInterval = null;
+
 
 // Enable hot-reloading in development mode
 if (process.env.NODE_ENV === "development") {
@@ -42,7 +45,7 @@ function createMainWindow() {
   });
 
   ipcMain.on("modbus-config", (event, config) => {
-    console.log("⚙️ Received dynamic Modbus config:", config);
+    // console.log("⚙️ Received dynamic Modbus config:", config);
     connectModbusRTU(config);
   });
 
@@ -120,7 +123,7 @@ async function connectModbusRTU(config) {
       parity: config.parity || "none",
     });
 
-    console.log(`✅ Modbus connection established on ${config.port}`);
+    // console.log(`✅ Modbus connection established on ${config.port}`);
     modbusClient.setID(1);
     modbusClient.setTimeout(config.timeout || 1000);
     mainWindow.webContents.send("modbus-connected", true);
@@ -133,14 +136,14 @@ async function connectModbusRTU(config) {
     pollingInterval = setInterval(() => {
       modbusClient.readInputRegisters(0, config.length || 16)
         .then((data) => {
-          console.log("📡 Modbus Input Registers:", data.data);
+          // console.log("📡 Modbus Input Registers:", data.data);
           mainWindow.webContents.send("serial-data", data.data);
         })
         .catch((err) => {
           isModbusConnected = false;
           mainWindow.webContents.send("modbus-connected", false);
           mainWindow.webContents.send("modbus-connection-error", err.message); // ✅ this line
-          console.error("❌ Error reading input registers:", err.message);
+          // console.error("❌ Error reading input registers:", err.message);
         });
     }, 2000);
 
@@ -148,10 +151,9 @@ async function connectModbusRTU(config) {
     isModbusConnected = false;
     mainWindow.webContents.send("modbus-connected", false);
     mainWindow.webContents.send("modbus-connection-error", err.message); // ✅ this line
-    console.error(`❌ Failed to connect to ${config.port}:`, err.message);
+    // console.error(`❌ Failed to connect to ${config.port}:`, err.message);
   }
 }
-
 
 // App lifecycle
 app.on("window-all-closed", () => {

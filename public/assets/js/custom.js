@@ -178,6 +178,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });  
 
+  function getRegisterValue(address) {
+    return modbusAddressMap[address] ?? "0";
+  }
+
   // Main sections
   const mainSections = ["login", "activation", "pages-with-side-bar"];
   
@@ -268,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
   
-    console.log("📨 Sending config to main process:", config);
+    // console.log("📨 Sending config to main process:", config);
     window.electron.sendModbusConfig(config);
   });
 
@@ -292,6 +296,63 @@ document.addEventListener("DOMContentLoaded", function () {
           event.preventDefault();
           showSidebarSection(link.target);
       });
+  });
+
+  // Hide and show text inputs on toggle of checkbox on sensor mapping page
+  document.querySelectorAll(".form-check-input[type='checkbox']").forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      const wrapper = this.closest(".form-check").querySelector(".input-wrapper");
+      const input = wrapper?.querySelector("input");
+
+      if (this.checked) {
+        wrapper.style.display = "block";
+        input?.focus();
+      } else {
+        wrapper.style.display = "none";
+        if (input) input.value = ""; // Clear value when unchecked
+      }
+    });
+  });
+
+  // get checked sensor values from sensor mapping page
+  function getCheckedSensorValues() {
+    const results = [];
+  
+    document.querySelectorAll(".form-check").forEach((checkBlock) => {
+      const checkbox = checkBlock.querySelector("input[type='checkbox']");
+      const label = checkBlock.querySelector("label")?.innerText?.trim();
+      const input = checkBlock.querySelector(".input-wrapper input");
+  
+      if (checkbox && checkbox.checked && input) {
+        const value = input.value || null;
+        const unit = input.dataset.unit || ""; // ✅ get unit from data attribute
+  
+        results.push({
+          label: label || checkbox.id,
+          value,
+          unit,
+        });
+      }
+    });
+  
+    return results;
+  }
+  
+  // ✅ On "Check Values" button click
+  document.getElementById("check_value")?.addEventListener("click", function () {
+    const sensorData = getCheckedSensorValues();
+    console.log("✅ Checked Sensor Data:", sensorData);
+
+    // Optional: Show in alert or UI
+    if (sensorData.length === 0) {
+      alert("No sensors selected.");
+    } else {
+      let output = "Checked Sensors:\n";
+      sensorData.forEach(({ label, value, unit }) => {
+        output += `• ${label} → ${value} ${unit}\n`;
+      });
+      alert(output);
+    }
   });
 
   // Show 'login' section by default
