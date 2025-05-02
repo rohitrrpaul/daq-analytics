@@ -9,4 +9,7 @@ contextBridge.exposeInMainWorld("electron", {
   sendModbusConfig: (config) => ipcRenderer.send("modbus-config", config),
   onModbusConnection: (callback) => ipcRenderer.on("modbus-connected", (_, status) => callback(status)),
   onModbusConnectionError: (callback) => ipcRenderer.on("modbus-connection-error", (_, message) => callback(message)),
+
+  loginCheck: (username, password) => ipcRenderer.invoke("login-check", username, password),
+  saveCredentials: (record) => ipcRenderer.invoke("save-credentials", record),
 });

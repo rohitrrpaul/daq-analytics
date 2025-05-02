@@ -107,8 +107,68 @@ document.addEventListener("DOMContentLoaded", function () {
   let modbusAddressMap = {};
   const loaderOverlay = document.getElementById("table-loader-overlay");
   const scanBtn = document.getElementById("scanBtn");
-  const formInputs = document.querySelectorAll("#sensorForm input, #sensorForm select");
+  const formInputs = document.querySelectorAll("#sensorForm input, #sensorForm select");  
 
+  document.getElementById("submit-login")?.addEventListener("click", async function (event) {
+    event.preventDefault();
+  
+    const username = document.getElementById("username")?.value?.trim();
+    const password = document.getElementById("password-input")?.value?.trim();
+  
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+  
+    const result = await window.electron.loginCheck(username, password);
+  
+    if (!result) {
+      alert("Login failed. Invalid username or password.");
+      return;
+    }
+  
+    if (result.from === "local") {
+      showMainSection("pages-with-side-bar");
+    } else if (result.from === "api") {
+      // Store full object for license validation later
+      window._tempLogin = result.record;
+      showMainSection("activation");
+    }
+  });
+
+  document.getElementById("submit-licence-key")?.addEventListener("click", async function (event) {
+    event.preventDefault();
+  
+    const enteredKey = document.getElementById("licenseKey")?.value?.trim();
+  
+    // Always validate presence
+    if (!enteredKey) {
+      alert("Please enter a license key.");
+      return;
+    }
+  
+    const saved = window._tempLogin;
+  
+    if (!saved) {
+      alert("Session expired. Please log in again.");
+      showMainSection("login");
+      return;
+    }
+  
+    if (enteredKey !== saved.serial_key) {
+      alert("❌ Invalid license key.");
+      return;
+    }
+  
+    const success = await window.electron.saveCredentials(saved);
+  
+    if (success) {
+      showMainSection("pages-with-side-bar");
+    } else {
+      alert("Failed to save license data.");
+    }
+  });  
+  
   // Disable Scan button when clicked
   scanBtn?.addEventListener("click", () => {
     scanBtn.disabled = true;
@@ -231,16 +291,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   // Show 'activation' when 'submit-login' is clicked
-  document.getElementById("submit-login")?.addEventListener("click", function (event) {
-      event.preventDefault();
-      showMainSection("activation");
-  });
+  // document.getElementById("submit-login")?.addEventListener("click", function (event) {
+  //     event.preventDefault();
+  //     showMainSection("activation");
+  // });
 
   // Show 'pages-with-side-bar' when 'submit-licence-key' is clicked
-  document.getElementById("submit-licence-key")?.addEventListener("click", function (event) {
-      event.preventDefault();
-      showMainSection("pages-with-side-bar");
-  });
+  // document.getElementById("submit-licence-key")?.addEventListener("click", function (event) {
+  //     event.preventDefault();
+  //     showMainSection("pages-with-side-bar");
+  // });
 
   document.querySelector(".modal-footer .btn-success")?.addEventListener("click", function () {
 

@@ -4,6 +4,9 @@ const path = require("path");
 const ModbusRTU = require("modbus-serial");
 const { initializeDatabase } = require("./database/db"); 
 const db = initializeDatabase();
+const sqlite3 = require("sqlite3").verbose();
+const crypto = require("crypto");
+const axios = require("axios");
 
 let mainWindow;
 let modbusClient = null;
@@ -32,7 +35,7 @@ function createMainWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, "public", "preload.js"),
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
@@ -53,6 +56,56 @@ function createMainWindow() {
     // checkForUpdates(); // Optional if updates needed
     // connectModbusRTU();
   }, 5000);
+
+  function checkPassword(password, djangoHash) {
+    const [algo, iter, salt, hash] = djangoHash.split("$");
+    const derived = crypto.pbkdf2Sync(password, salt, parseInt(iter), 32, "sha256").toString("base64");
+    return derived === hash;
+  }
+  
+  ipcMain.handle("login-check", async (_, username, password) => {
+    const db = new sqlite3.Database("./database/daqanalytics.db");
+  
+    return new Promise((resolve) => {
+      db.get("SELECT * FROM credentials WHERE username = ?", [username], async (err, row) => {
+        if (row) {
+          const valid = checkPassword(password, row.hashed_password);
+          return resolve(valid ? { from: "local", row } : false);
+        }
+  
+        try {
+          const res = await axios.post("http://127.0.0.1:8000/api/login/", { username, password });
+          const data = res.data;
+  
+          resolve({
+            from: "api",
+            record: {
+              username,
+              hashed_password: data.hashed_password,
+              serial_key: data.serial_key,
+              valid_from: data.valid_from,
+              valid_till: data.valid_till,
+            }
+          });
+        } catch (e) {
+          resolve(false);
+        }
+      });
+    });
+  });
+  
+  ipcMain.handle("save-credentials", async (_, record) => {
+    const db = new sqlite3.Database("./database/daqanalytics.db");
+  
+    return new Promise((resolve) => {
+      db.run(
+        `INSERT INTO credentials (username, hashed_password, serial_key, valid_from, valid_till)
+         VALUES (?, ?, ?, ?, ?)`,
+        [record.username, record.hashed_password, record.serial_key, record.valid_from, record.valid_till],
+        (err) => resolve(!err)
+      );
+    });
+  });  
 }
 
 // Window Control Handlers

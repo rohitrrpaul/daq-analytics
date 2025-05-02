@@ -13,20 +13,14 @@ function initializeDatabase() {
     console.log("🆕 Creating new SQLite database: daqanalytics.db");
 
     db.serialize(() => {
-      // Create a sample temporary table
-      db.run(`
-        CREATE TABLE IF NOT EXISTS temp_data (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          name TEXT NOT NULL,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-      `, (err) => {
-        if (err) {
-          console.error("❌ Failed to create table:", err.message);
-        } else {
-          console.log("✅ Temporary table 'temp_data' created successfully.");
-        }
-      });
+        db.run(`CREATE TABLE IF NOT EXISTS credentials (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,
+            hashed_password TEXT,
+            serial_key TEXT,
+            valid_from TEXT,
+            valid_till TEXT
+        )`);
     });
   } else {
     console.log("📁 Database already exists. Skipping creation.");
