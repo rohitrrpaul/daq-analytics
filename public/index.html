@@ -151,7 +151,12 @@
                                             </div>
                                         </div>
                                         <div class="mt-4">
-                                            <button id="submit-login" class="btn btn-primary w-100">Log In</button>
+                                            <!-- <button id="submit-login" class="btn btn-primary w-100">Log In</button> -->
+                                            <button id="submit-login" class="btn btn-primary w-100" type="submit" disabled>
+                                                <span id="login-text">Log In</span>
+                                                <span id="login-spinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+                                              </button>
+                                              
                                         </div>
                                     </form>
                                 </div>

@@ -108,33 +108,74 @@ document.addEventListener("DOMContentLoaded", function () {
   const loaderOverlay = document.getElementById("table-loader-overlay");
   const scanBtn = document.getElementById("scanBtn");
   const formInputs = document.querySelectorAll("#sensorForm input, #sensorForm select");  
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password-input");
+  const loginBtn = document.getElementById("submit-login");
+
+  function validateLoginFields() {
+    const usernameFilled = usernameInput?.value.trim() !== "";
+    const passwordFilled = passwordInput?.value.trim() !== "";
+
+    loginBtn.disabled = !(usernameFilled && passwordFilled);
+  }
+
+  function toggleLoginLoading(state) {
+    const loginBtn = document.getElementById("submit-login");
+    const loginSpinner = document.getElementById("login-spinner");
+  
+    if (state) {
+      loginBtn.disabled = true;
+      loginSpinner.classList.remove("d-none");
+    } else {
+      loginBtn.disabled = false;
+      loginSpinner.classList.add("d-none");
+    }
+  }  
+
+  // Attach listeners
+  usernameInput?.addEventListener("input", validateLoginFields);
+  passwordInput?.addEventListener("input", validateLoginFields);
 
   document.getElementById("submit-login")?.addEventListener("click", async function (event) {
     event.preventDefault();
-  
-    const username = document.getElementById("username")?.value?.trim();
-    const password = document.getElementById("password-input")?.value?.trim();
-  
-    if (!username || !password) {
-      showToast("Please enter both username and password.");
-      return;
-    }
-  
+
+  const username = document.getElementById("username")?.value?.trim();
+  const password = document.getElementById("password-input")?.value?.trim();
+
+  if (!username || !password) {
+    showToast("Please enter both username and password.");
+    return;
+  }
+
+  toggleLoginLoading(true); // 🌀 Show spinner
+
+  try {
     const result = await window.electron.loginCheck(username, password);
 
-    if (!result) return showToast("Login failed.");
-  
+    if (!result) {
+      showToast("Login failed. Please try again.");
+      return;
+    }
+
     if (result.expired) {
       showToast("Your license is expired or not yet active.");
       return;
     }
-    
+
     if (result.from === "local") {
       showMainSection("pages-with-side-bar");
     } else if (result.from === "api") {
       window._tempLogin = result.record;
       showMainSection("activation");
     }
+
+  } catch (err) {
+    showToast("Something went wrong.");
+    console.error("Login error:", err);
+  } finally {
+    toggleLoginLoading(false); // ✅ Always hide spinner
+    validateLoginFields();     // Re-check form to enable/disable button based on input
+  }
   });
 
   document.getElementById("submit-licence-key")?.addEventListener("click", async function (event) {
