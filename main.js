@@ -11,7 +11,7 @@ const axios = require("axios");
 let mainWindow;
 let modbusClient = null;
 let pollingInterval = null;
-
+const dayjs = require("dayjs");
 
 // Enable hot-reloading in development mode
 if (process.env.NODE_ENV === "development") {
@@ -63,6 +63,37 @@ function createMainWindow() {
     return derived === hash;
   }
   
+  // ipcMain.handle("login-check", async (_, username, password) => {
+  //   const db = new sqlite3.Database("./database/daqanalytics.db");
+  
+  //   return new Promise((resolve) => {
+  //     db.get("SELECT * FROM credentials WHERE username = ?", [username], async (err, row) => {
+  //       if (row) {
+  //         const valid = checkPassword(password, row.hashed_password);
+  //         return resolve(valid ? { from: "local", row } : false);
+  //       }
+  
+  //       try {
+  //         const res = await axios.post("http://127.0.0.1:8000/api/login/", { username, password });
+  //         const data = res.data;
+  
+  //         resolve({
+  //           from: "api",
+  //           record: {
+  //             username,
+  //             hashed_password: data.hashed_password,
+  //             serial_key: data.serial_key,
+  //             valid_from: data.valid_from,
+  //             valid_till: data.valid_till,
+  //           }
+  //         });
+  //       } catch (e) {
+  //         resolve(false);
+  //       }
+  //     });
+  //   });
+  // });
+
   ipcMain.handle("login-check", async (_, username, password) => {
     const db = new sqlite3.Database("./database/daqanalytics.db");
   
@@ -70,12 +101,33 @@ function createMainWindow() {
       db.get("SELECT * FROM credentials WHERE username = ?", [username], async (err, row) => {
         if (row) {
           const valid = checkPassword(password, row.hashed_password);
-          return resolve(valid ? { from: "local", row } : false);
+  
+          if (!valid) return resolve(false);
+  
+          const now = dayjs();
+          const start = dayjs(row.valid_from);
+          const end = dayjs(row.valid_till);
+          console.log(now.format("YYYY-MM-DD")+' '+start.format("YYYY-MM-DD"))
+  
+          if (now.isBefore(start) || now.isAfter(end)){
+            return resolve({ expired: true, from: "local", row });
+          }
+  
+          return resolve({ from: "local", row });
         }
   
+        // If not found locally, call the API
         try {
           const res = await axios.post("http://127.0.0.1:8000/api/login/", { username, password });
           const data = res.data;
+  
+          const now = dayjs();
+          const start = dayjs(data.valid_from);
+          const end = dayjs(data.valid_till);
+  
+          if (now.isBefore(start) || now.isAfter(end)) {
+            return resolve({ expired: true, from: "api", record: data });
+          }
   
           resolve({
             from: "api",

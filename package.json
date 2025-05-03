@@ -16,6 +16,7 @@
   "dependencies": {
     "@serialport/parser-readline": "^13.0.0",
     "axios": "^1.8.3",
+    "dayjs": "^1.11.13",
     "electron-updater": "^6.3.9",
     "modbus-serial": "^8.0.20-no-serial-port",
     "serialport": "^13.0.0",

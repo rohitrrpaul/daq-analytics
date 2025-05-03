@@ -116,21 +116,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = document.getElementById("password-input")?.value?.trim();
   
     if (!username || !password) {
-      alert("Please enter both username and password.");
+      showToast("Please enter both username and password.");
       return;
     }
   
     const result = await window.electron.loginCheck(username, password);
+
+    if (!result) return showToast("Login failed.");
   
-    if (!result) {
-      alert("Login failed. Invalid username or password.");
+    if (result.expired) {
+      showToast("Your license is expired or not yet active.");
       return;
     }
-  
+    
     if (result.from === "local") {
       showMainSection("pages-with-side-bar");
     } else if (result.from === "api") {
-      // Store full object for license validation later
       window._tempLogin = result.record;
       showMainSection("activation");
     }
@@ -143,20 +144,20 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // Always validate presence
     if (!enteredKey) {
-      alert("Please enter a license key.");
+      showToast("Please enter a license key.");
       return;
     }
   
     const saved = window._tempLogin;
   
     if (!saved) {
-      alert("Session expired. Please log in again.");
+      showToast("Session expired. Please log in again.");
       showMainSection("login");
       return;
     }
   
     if (enteredKey !== saved.serial_key) {
-      alert("❌ Invalid license key.");
+      showToast("❌ Invalid license key.");
       return;
     }
   
@@ -165,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (success) {
       showMainSection("pages-with-side-bar");
     } else {
-      alert("Failed to save license data.");
+      showToast("Failed to save license data.");
     }
   });  
   
@@ -237,6 +238,18 @@ document.addEventListener("DOMContentLoaded", function () {
       tbody.appendChild(row);
     }
   });  
+
+  function showToast(message, duration = 3000) {
+    const toast = document.getElementById("toast");
+    if (!toast) return;
+  
+    toast.textContent = message;
+    toast.classList.add("show");
+  
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, duration);
+  }
 
   function getRegisterValue(address) {
     return modbusAddressMap[address] ?? "0";
@@ -328,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function () {
       isNaN(config.timeout) ||
       isNaN(config.lastAddress)
     ) {
-      alert("Please fill all required Modbus fields correctly.");
+      showToast("Please fill all required Modbus fields correctly.");
       return;
     }
   
@@ -430,12 +443,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   
     if (missingValue) {
-      alert(`Please enter a value for "${missingLabel}"`);
+      showToast(`Please enter a value for "${missingLabel}"`);
       return;
     }
   
     if (sensorData.length === 0) {
-      alert("No sensors selected.");
+      showToast("No sensors selected.");
     } else {
       console.log("✅ Checked Sensor Data:", sensorData);
     }

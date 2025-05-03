@@ -35,6 +35,29 @@ background: #222328;
     padding: 0 0 15px 0;
 }
 
+.toast-message {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background-color: #f8d7da; /* light red */
+	color: #842029;            /* dark red text */
+	border: 1px solid #842029; /* border red */
+	padding: 12px 20px;
+	font-size: 12px;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.4s ease, transform 0.4s ease;
+	transform: translateY(20px);
+	z-index: 9999;
+  }
+  
+  .toast-message.show {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
+  }
+
+  
 .scrollbar {
 	height: calc(100vh - 0px); /* adjust 60px to account for header/footer if needed */
 	overflow-y: auto;
