@@ -50,14 +50,34 @@ background: #222328;
 	transform: translateY(20px);
 	z-index: 9999;
   }
-  
+
   .toast-message.show {
 	opacity: 1;
 	pointer-events: auto;
 	transform: translateY(0);
   }
 
+  .text-left{
+	text-align: left;
+	font-weight: normal;
+  }
+
+  .full-width-dashboard {
+	margin-left: 0 !important;
+	width: 100% !important;
+	padding-left: 2rem;  /* optional spacing */
+	padding-right: 2rem;
+  }
   
+  body.fullscreen-dashboard .app-menu {
+	display: none !important;
+  }
+  
+  body.fullscreen-dashboard #dashboard {
+	margin-left: 0 !important;
+	width: 100% !important;
+  }
+
 .scrollbar {
 	height: calc(100vh - 0px); /* adjust 60px to account for header/footer if needed */
 	overflow-y: auto;
@@ -237,7 +257,9 @@ background: #222328;
    }
    
    .custom-select select {
-	display: none;
+	border-radius: 0;
+	background: transparent;
+	color: #FFF;
    }
    
    .custom-select .select-selected {

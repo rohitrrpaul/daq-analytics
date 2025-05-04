@@ -12,4 +12,7 @@ contextBridge.exposeInMainWorld("electron", {
 
   loginCheck: (username, password) => ipcRenderer.invoke("login-check", username, password),
   saveCredentials: (record) => ipcRenderer.invoke("save-credentials", record),
+  getProjects: () => ipcRenderer.invoke("get-projects"),
+
+  invoke: (channel, ...args) => ipcRenderer.invoke(channel, ...args)
 });

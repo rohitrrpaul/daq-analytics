@@ -2,7 +2,7 @@ const { app, BrowserWindow, dialog, screen, ipcMain } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const ModbusRTU = require("modbus-serial");
-const { initializeDatabase } = require("./database/db"); 
+const { initializeDatabase } = require("./database/db");
 const db = initializeDatabase();
 const sqlite3 = require("sqlite3").verbose();
 const crypto = require("crypto");
@@ -62,73 +62,42 @@ function createMainWindow() {
     const derived = crypto.pbkdf2Sync(password, salt, parseInt(iter), 32, "sha256").toString("base64");
     return derived === hash;
   }
-  
-  // ipcMain.handle("login-check", async (_, username, password) => {
-  //   const db = new sqlite3.Database("./database/daqanalytics.db");
-  
-  //   return new Promise((resolve) => {
-  //     db.get("SELECT * FROM credentials WHERE username = ?", [username], async (err, row) => {
-  //       if (row) {
-  //         const valid = checkPassword(password, row.hashed_password);
-  //         return resolve(valid ? { from: "local", row } : false);
-  //       }
-  
-  //       try {
-  //         const res = await axios.post("http://127.0.0.1:8000/api/login/", { username, password });
-  //         const data = res.data;
-  
-  //         resolve({
-  //           from: "api",
-  //           record: {
-  //             username,
-  //             hashed_password: data.hashed_password,
-  //             serial_key: data.serial_key,
-  //             valid_from: data.valid_from,
-  //             valid_till: data.valid_till,
-  //           }
-  //         });
-  //       } catch (e) {
-  //         resolve(false);
-  //       }
-  //     });
-  //   });
-  // });
 
   ipcMain.handle("login-check", async (_, username, password) => {
     const db = new sqlite3.Database("./database/daqanalytics.db");
-  
+
     return new Promise((resolve) => {
       db.get("SELECT * FROM credentials WHERE username = ?", [username], async (err, row) => {
         if (row) {
           const valid = checkPassword(password, row.hashed_password);
-  
+
           if (!valid) return resolve(false);
-  
+
           const now = dayjs();
           const start = dayjs(row.valid_from);
           const end = dayjs(row.valid_till);
-          console.log(now.format("YYYY-MM-DD")+' '+start.format("YYYY-MM-DD"))
-  
-          if (now.isBefore(start) || now.isAfter(end)){
+          console.log(now.format("YYYY-MM-DD") + ' ' + start.format("YYYY-MM-DD"))
+
+          if (now.isBefore(start) || now.isAfter(end)) {
             return resolve({ expired: true, from: "local", row });
           }
-  
+
           return resolve({ from: "local", row });
         }
-  
+
         // If not found locally, call the API
         try {
           const res = await axios.post("http://127.0.0.1:8000/api/login/", { username, password });
           const data = res.data;
-  
+
           const now = dayjs();
           const start = dayjs(data.valid_from);
           const end = dayjs(data.valid_till);
-  
+
           if (now.isBefore(start) || now.isAfter(end)) {
             return resolve({ expired: true, from: "api", record: data });
           }
-  
+
           resolve({
             from: "api",
             record: {
@@ -145,10 +114,10 @@ function createMainWindow() {
       });
     });
   });
-  
+
   ipcMain.handle("save-credentials", async (_, record) => {
     const db = new sqlite3.Database("./database/daqanalytics.db");
-  
+
     return new Promise((resolve) => {
       db.run(
         `INSERT INTO credentials (username, hashed_password, serial_key, valid_from, valid_till)
@@ -157,8 +126,37 @@ function createMainWindow() {
         (err) => resolve(!err)
       );
     });
-  });  
+  });
 }
+
+ipcMain.handle("check-project-exists", async (_, name) => {
+  return new Promise((resolve) => {
+    db.get("SELECT * FROM projects WHERE LOWER(name) = LOWER(?)", [name], (err, row) => {
+      resolve(!!row);
+    });
+  });
+});
+
+ipcMain.handle("create-project", async (_, name) => {
+  return new Promise((resolve) => {
+    const createdAt = dayjs().format();
+    db.run("INSERT INTO projects (name, created_at) VALUES (?, ?)", [name, createdAt], function (err) {
+      if (err) return resolve(false);
+      resolve({ id: this.lastID, name });
+    });
+  });
+});
+
+ipcMain.handle("get-projects", async () => {
+  const db = new sqlite3.Database("./database/daqanalytics.db");
+
+  return new Promise((resolve) => {
+    db.all("SELECT id, name FROM projects ORDER BY id DESC", (err, rows) => {
+      if (err) return resolve([]);
+      resolve(rows);
+    });
+  });
+});
 
 // Window Control Handlers
 ipcMain.on("minimize-window", () => {
