@@ -27,6 +27,40 @@ function initializeDatabase() {
           name TEXT UNIQUE NOT NULL,
           created_at TEXT
         )`);
+
+        db.run(`
+          CREATE TABLE IF NOT EXISTS configuration (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            project_id INTEGER,
+            client_name TEXT,
+            field_name TEXT,
+            well_number TEXT,
+            well_history TEXT,
+            drilled_on TEXT,
+            completed_on TEXT,
+            completion_date TEXT,
+            formation_type TEXT,
+            last_operation TEXT,
+            well_history_details TEXT,
+            surface_location TEXT,
+            rig_elevation TEXT,
+            casing_details TEXT,
+            critical_depth TEXT,
+            tubing_details TEXT,
+            max_deviation TEXT,
+            reservoir_pressure TEXT,
+            reservoir_temperature TEXT,
+            last_hud TEXT,
+            perforation_interval TEXT,
+            pay_zone TEXT,
+            minimum_id TEXT,
+            well_status TEXT,
+            completion_picture_path TEXT,
+            well_program_path TEXT,
+            design_service_path TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )`);
+        
     });
   } else {
     console.log("📁 Database already exists. Skipping creation.");

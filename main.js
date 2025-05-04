@@ -7,6 +7,7 @@ const db = initializeDatabase();
 const sqlite3 = require("sqlite3").verbose();
 const crypto = require("crypto");
 const axios = require("axios");
+const fs = require("fs");
 
 let mainWindow;
 let modbusClient = null;
@@ -154,6 +155,51 @@ ipcMain.handle("get-projects", async () => {
     db.all("SELECT id, name FROM projects ORDER BY id DESC", (err, rows) => {
       if (err) return resolve([]);
       resolve(rows);
+    });
+  });
+});
+
+ipcMain.handle("save-well-config", async (event, data) => {
+  const {
+    projectId, inputs, files
+  } = data;
+
+  const folderPath = path.join(__dirname, "uploads", `${projectId}`);
+  if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath, { recursive: true });
+
+  const saveFile = (fileObj, fieldName) => {
+    if (!fileObj?.path) return null;
+    const dest = path.join(folderPath, `${fieldName}_${Date.now()}_${fileObj.name}`);
+    fs.copyFileSync(fileObj.path, dest);
+    return dest;
+  };
+
+  const completionPicture = saveFile(files.completionPicture, "completion_picture");
+  const wellProgram = saveFile(files.wellProgram, "well_program");
+  const designService = saveFile(files.designService, "design_service");
+
+  return new Promise((resolve, reject) => {
+    db.run(`
+      INSERT INTO configuration (
+        project_id, client_name, field_name, well_number, well_history,
+        drilled_on, completed_on, completion_date, formation_type,
+        last_operation, well_history_details, surface_location, rig_elevation,
+        casing_details, critical_depth, tubing_details, max_deviation,
+        reservoir_pressure, reservoir_temperature, last_hud,
+        perforation_interval, pay_zone, minimum_id, well_status,
+        completion_picture_path, well_program_path, design_service_path
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [
+      projectId, inputs.clientName, inputs.fieldName, inputs.wellNumber, inputs.wellHistory,
+      inputs.drilledOn, inputs.completedOn, inputs.completionDate, inputs.formationType,
+      inputs.lastOperation, inputs.wellHistoryDetails, inputs.surfaceLocation, inputs.rigElevation,
+      inputs.casingDetails, inputs.criticalDepth, inputs.tubingDetails, inputs.maxDeviation,
+      inputs.reservoirPressure, inputs.reservoirTemperature, inputs.lastHud,
+      inputs.perforationInterval, inputs.payZone, inputs.minimumId, inputs.wellStatus,
+      completionPicture, wellProgram, designService
+    ], function (err) {
+      if (err) return reject(err);
+      resolve({ success: true });
     });
   });
 });

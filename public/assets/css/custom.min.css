@@ -261,6 +261,27 @@ background: #222328;
 	background: transparent;
 	color: #FFF;
    }
+
+   .not-clickable {
+	pointer-events: none;
+	cursor: default;
+	opacity: 1; /* keep it visually normal */
+  }
+  
+  .step-arrow-nav .nav .nav-arrow::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -8px; /* Adjust based on spacing */
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid black; /* This creates the arrow */
+    z-index: 1;
+}
+
    
    .custom-select .select-selected {
 	background-color: #fff;

@@ -13,6 +13,7 @@
     <link id="fontsLink"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
         rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css">
     <script src="assets/js/layout.js"></script>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -334,7 +335,7 @@
                         <!-- ========== SELECCT PROJECT ========== -->
                         <div class="menu-pojects-dropdown custom-select" id="project-dropdown">
                             <select id="project-select" class="form-control">
-                                
+
                             </select>
                         </div>
                         <ul class="navbar-nav" id="navbar-nav">
@@ -525,7 +526,7 @@
                                 <div class="col-2">
                                     <label class="form-label">Select Template</label>
                                     <div class="form-group custom-select">
-                                        <select class="form-control">
+                                        <select class="form-control" style="color: #000;">
                                             <option value="0">Select</option>
                                             <option value="1">Template 1</option>
                                             <option value="2">Template 2</option>
@@ -541,330 +542,206 @@
                             <div class="card">
                                 <!-- end card header -->
                                 <div class="card-body form-steps">
-                                    <form action="#">
+                                    <form id="well-config-form" action="#">
                                         <div class="step-arrow-nav mb-4">
                                             <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active done" id="well-production-tab"
-                                                        data-bs-toggle="pill" data-bs-target="#well-production-info"
-                                                        type="button" role="tab" aria-controls="well-production-info"
-                                                        aria-selected="true">Data Capture for individual well
-                                                        production</button>
+                                                    <button data-bs-target="#step1" class="nav-link nav-arrow active"
+                                                        type="button" disabled id="well-tab-header-1"
+                                                        style="background-color: #0f1114; color: #fff;">
+                                                        Data Capture for Individual Well Production
+                                                    </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="well-information-tab"
-                                                        data-bs-toggle="pill" data-bs-target="#well-information-info"
-                                                        type="button" role="tab" aria-controls="well-information"
-                                                        aria-selected="false">Well
-                                                        Information</button>
+                                                    <button data-bs-target="#step2" class="nav-link" type="button"
+                                                        disabled id="well-tab-header-2">
+                                                        Well Information
+                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>
+
                                         <div class="tab-content">
-                                            <div class="tab-pane active show" id="well-production-info" role="tabpanel"
-                                                aria-labelledby="well-production-tab">
-                                                <div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="">Client Name</label>
-                                                                <input type="text" class="form-control" id=""
-                                                                    placeholder="Enter Client Name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label for="clientLogo" class="form-label">Client
-                                                                    logo</label>
-                                                                <input class="form-control" type="file" id="clientLogo">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="">Field name</label>
-                                                                <input type="text" class="form-control" id=""
-                                                                    placeholder="Enter Field name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="">Well Number</label>
-                                                                <input type="text" class="form-control" id=""
-                                                                    placeholder="Enter Well Number">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="">Well
-                                                                    History</label>
-                                                                <input type="text" class="form-control" id=""
-                                                                    placeholder="Enter Well History">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="">Well Drilled on
-                                                                    (mm/yy)</label>
-                                                                <input type="month" class="form-control" id=""
-                                                                    placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="">Well completed on
-                                                                    (mm/yy)
-                                                                </label>
-                                                                <input type="month" class="form-control" id=""
-                                                                    placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="">Work completion
-                                                                    date
-                                                                </label>
-                                                                <input type="date" class="form-control" id=""
-                                                                    placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="mb-3">
-                                                                <label class="form-label"
-                                                                    for="des-info-description-input">Type of
-                                                                    formation</label>
-                                                                <textarea class="form-control" placeholder="Type here.."
-                                                                    id="" rows="2"></textarea>
-                                                                <div id="" class="form-text"> It must be at least
-                                                                    100
-                                                                    words.
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="mb-3">
-                                                                <label class="form-label"
-                                                                    for="des-info-description-input">Last operation
-                                                                    performed</label>
-                                                                <textarea class="form-control" placeholder="Type here.."
-                                                                    id="" rows="2"></textarea>
-                                                                <div id="" class="form-text"> It must be at least
-                                                                    200
-                                                                    words.
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <label class="form-label"
-                                                                for="des-info-description-input">Well
-                                                                History</label>
-                                                            <textarea class="form-control" placeholder="Type here.."
-                                                                id="" rows="4"></textarea>
-                                                            <div id="" class="form-text"> It must be at least 500
-                                                                words.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-start gap-3 mt-4">
-                                                    <button type="button"
-                                                        class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                                                        data-nexttab="well-information-tab">
-                                                        <i
-                                                            class="ri-arrow-right-line label-icon align-middle fs-lg ms-2"></i>Go
-                                                        to next </button>
-                                                </div>
-                                            </div>
-                                            <!-- end tab pane -->
-                                            <div class="tab-pane fade show" id="well-information-info" role="tabpanel"
-                                                aria-labelledby="well-information">
+                                            <!-- Step 1 -->
+                                            <div class="tab-pane fade show active" id="step1" role="tabpanel">
                                                 <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Surface
-                                                                location</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Surface location">
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="client-name" class="form-label">Client Name</label>
+                                                        <input type="text" id="client-name" class="form-control"
+                                                            placeholder="Enter Client Name">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="des-info-description-input">Drilling Rig
-                                                                Elevation</label>
-                                                            <textarea class="form-control" placeholder="Type here.."
-                                                                id="" rows="1"></textarea>
-                                                            <div id="" class="form-text"> It must be at least 50
-                                                                words.
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="client-logo" class="form-label">Client Logo</label>
+                                                        <input type="file" id="client-logo" class="form-control">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="des-info-description-input">Production Casing
-                                                                details</label>
-                                                            <textarea class="form-control" placeholder="Type here.."
-                                                                id="" rows="2"></textarea>
-                                                            <div id="" class="form-text"> It must be at least 100
-                                                                words.
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="field-name" class="form-label">Field Name</label>
+                                                        <input type="text" id="field-name" class="form-control"
+                                                            placeholder="Enter Field Name">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="des-info-description-input">Critical
-                                                                depth</label>
-                                                            <textarea class="form-control" placeholder="Type here.."
-                                                                id="" rows="2"></textarea>
-                                                            <div id="" class="form-text"> It must be at least 100
-                                                                words.
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="well-number" class="form-label">Well Number</label>
+                                                        <input type="text" id="well-number" class="form-control"
+                                                            placeholder="Enter Well Number">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Tubing details</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Tubing details">
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="well-history" class="form-label">Well
+                                                            History</label>
+                                                        <input type="text" id="well-history" class="form-control"
+                                                            placeholder="Enter Well History">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Max. Deviation</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Max. Deviation">
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="drilled-on" class="form-label">Well Drilled on
+                                                            (mm/yy)</label>
+                                                        <input type="month" id="drilled-on" class="form-control">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Reservoir
-                                                                pressure</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Reservoir pressure">
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="completed-on" class="form-label">Well Completed on
+                                                            (mm/yy)</label>
+                                                        <input type="month" id="completed-on" class="form-control">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Reservoir
-                                                                temperature</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Reservoir temperature">
-                                                        </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="completion-date" class="form-label">Work Completion
+                                                            Date</label>
+                                                        <input type="date" id="completion-date" class="form-control">
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="des-info-description-input">Last
-                                                                HUD</label>
-                                                            <textarea class="form-control" placeholder="Type here.."
-                                                                id="" rows="2"></textarea>
-                                                            <div id="" class="form-text"> It must be at least 50
-                                                                words.
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-lg-12 mb-3">
+                                                        <label for="formation-type" class="form-label">Type of
+                                                            Formation</label>
+                                                        <textarea id="formation-type" class="form-control" rows="2"
+                                                            placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 100 words.</div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="des-info-description-input">Perforation
-                                                                Interval</label>
-                                                            <textarea class="form-control" placeholder="Type here.."
-                                                                id="" rows="2"></textarea>
-                                                            <div id="" class="form-text"> It must be at least 100
-                                                                words.
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-lg-12 mb-3">
+                                                        <label for="last-operation" class="form-label">Last Operation
+                                                            Performed</label>
+                                                        <textarea id="last-operation" class="form-control" rows="2"
+                                                            placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 200 words.</div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Pay zone</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Pay zone">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Minimum ID</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Minimum ID">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="">Well Status</label>
-                                                            <input type="text" class="form-control" id=""
-                                                                placeholder="Enter Well Status">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label for="wellCompletionDetails" class="form-label">
-                                                                Picture
-                                                                of well completion details</label>
-                                                            <input class="form-control" type="file"
-                                                                id="wellCompletionDetails">
-                                                            <div id="" class="form-text"> Only a PDF file is
-                                                                allowed.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label for="wellProgram" class="form-label">Well
-                                                                program</label>
-                                                            <input class="form-control" type="file" id="wellProgram">
-                                                            <div id="" class="form-text"> Only a PDF file is
-                                                                allowed.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label for="desigOfService" class="form-label"> Design
-                                                                of
-                                                                service</label>
-                                                            <input class="form-control" type="file" id="desigOfService">
-                                                            <div id="" class="form-text"> Only a PDF file is
-                                                                allowed.
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-lg-12 mb-3">
+                                                        <label for="well-history-details" class="form-label">Well
+                                                            History</label>
+                                                        <textarea id="well-history-details" class="form-control"
+                                                            rows="4" placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 500 words.</div>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex align-items-start gap-3 mt-4">
-                                                    <button type="button" class="btn btn-light btn-label previestab"
-                                                        data-previous="well-production-tab">
-                                                        <i
-                                                            class="ri-arrow-left-line label-icon align-middle fs-lg me-2"></i>
-                                                        Back </button>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                                                        data-nexttab="pills-experience-tab">
-                                                        <i
-                                                            class="ri-arrow-right-line label-icon align-middle fs-lg ms-2"></i>Submit
-                                                    </button>
+                                                <div class="d-flex justify-content-end mt-4">
+                                                    <button type="button" class="btn btn-success" id="go-to-step2">Go to
+                                                        Next</button>
                                                 </div>
                                             </div>
-                                            <!-- end tab pane -->
-                                            <div class="tab-pane fade" id="pills-experience" role="tabpanel">
-                                                <div class="text-center">
-                                                    <div class="avatar-md mt-5 mb-4 mx-auto">
-                                                        <div
-                                                            class="avatar-title bg-light text-success display-4 rounded-circle">
-                                                            <i class="ri-checkbox-circle-fill"></i>
-                                                        </div>
+
+                                            <!-- Step 2 -->
+                                            <div class="tab-pane fade" id="step2" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="surface-location" class="form-label">Surface
+                                                            Location</label>
+                                                        <input type="text" id="surface-location" class="form-control"
+                                                            placeholder="Enter Surface Location">
                                                     </div>
-                                                    <h5>Well Done !</h5>
-                                                    <p class="text-muted">You have successfully completed the
-                                                        configuration
-                                                        setup.</p>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="rig-elevation" class="form-label">Drilling Rig
+                                                            Elevation</label>
+                                                        <textarea id="rig-elevation" class="form-control" rows="1"
+                                                            placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 50 words.</div>
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="casing-details" class="form-label">Production Casing
+                                                            Details</label>
+                                                        <textarea id="casing-details" class="form-control" rows="2"
+                                                            placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 100 words.</div>
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="critical-depth" class="form-label">Critical
+                                                            Depth</label>
+                                                        <textarea id="critical-depth" class="form-control" rows="2"
+                                                            placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 100 words.</div>
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="tubing-details" class="form-label">Tubing
+                                                            Details</label>
+                                                        <input type="text" id="tubing-details" class="form-control"
+                                                            placeholder="Enter Tubing Details">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="max-deviation" class="form-label">Max.
+                                                            Deviation</label>
+                                                        <input type="text" id="max-deviation" class="form-control"
+                                                            placeholder="Enter Max. Deviation">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="reservoir-pressure" class="form-label">Reservoir
+                                                            Pressure</label>
+                                                        <input type="text" id="reservoir-pressure" class="form-control"
+                                                            placeholder="Enter Reservoir Pressure">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="reservoir-temperature" class="form-label">Reservoir
+                                                            Temperature</label>
+                                                        <input type="text" id="reservoir-temperature"
+                                                            class="form-control"
+                                                            placeholder="Enter Reservoir Temperature">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="last-hud" class="form-label">Last HUD</label>
+                                                        <textarea id="last-hud" class="form-control" rows="2"
+                                                            placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 50 words.</div>
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="perforation-interval" class="form-label">Perforation
+                                                            Interval</label>
+                                                        <textarea id="perforation-interval" class="form-control"
+                                                            rows="2" placeholder="Type here.."></textarea>
+                                                        <div class="form-text">It must be at least 100 words.</div>
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="pay-zone" class="form-label">Pay Zone</label>
+                                                        <input type="text" id="pay-zone" class="form-control"
+                                                            placeholder="Enter Pay Zone">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="minimum-id" class="form-label">Minimum ID</label>
+                                                        <input type="text" id="minimum-id" class="form-control"
+                                                            placeholder="Enter Minimum ID">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="well-status" class="form-label">Well Status</label>
+                                                        <input type="text" id="well-status" class="form-control"
+                                                            placeholder="Enter Well Status">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="completion-picture" class="form-label">Picture of
+                                                            Well Completion Details (PDF only)</label>
+                                                        <input type="file" id="completion-picture" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="well-program" class="form-label">Well Program (PDF
+                                                            only)</label>
+                                                        <input type="file" id="well-program" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-3">
+                                                        <label for="design-service" class="form-label">Design of Service
+                                                            (PDF only)</label>
+                                                        <input type="file" id="design-service" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between mt-4">
+                                                    <button type="button" class="btn btn-light previestab"
+                                                        data-previous="well-tab-header-1">Back</button>
+                                                    <button type="submit" class="btn btn-success">Submit</button>
                                                 </div>
                                             </div>
-                                            <!-- end tab pane -->
                                         </div>
-                                        <!-- end tab content -->
                                     </form>
                                 </div>
+
                                 <!-- end card body -->
                             </div>
                         </div>

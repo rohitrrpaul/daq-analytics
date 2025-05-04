@@ -21,12 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const passwordInput = document.getElementById("password-input");
   const loginBtn = document.getElementById("submit-login");
 
+  /* Login button disable validation */
+
   function validateLoginFields() {
     const usernameFilled = usernameInput?.value.trim() !== "";
     const passwordFilled = passwordInput?.value.trim() !== "";
 
     loginBtn.disabled = !(usernameFilled && passwordFilled);
   }
+
+  /* Logn button spinner logic */
 
   function toggleLoginLoading(state) {
     const loginBtn = document.getElementById("submit-login");
@@ -44,6 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Attach listeners
   usernameInput?.addEventListener("input", validateLoginFields);
   passwordInput?.addEventListener("input", validateLoginFields);
+
+  /* Submission of login form - First time call the api then from sqlite */
 
   document.getElementById("submit-login")?.addEventListener("click", async function (event) {
     event.preventDefault();
@@ -89,6 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  /* Licence key validation - will be called only once for the first time */
+
   document.getElementById("submit-licence-key")?.addEventListener("click", async function (event) {
     event.preventDefault();
 
@@ -124,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // ✅ custom.js - Project creation logic
+  /* Project creation logic */
 
   document.getElementById("project-submit")?.addEventListener("click", async function (e) {
     e.preventDefault();
@@ -149,6 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  /* Project dropdown creation with project data */
+
   async function populateProjectsUI() {
     const select = document.getElementById("project-select");
     if (!select) return;
@@ -166,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const createNewOption = document.createElement("option");
     createNewOption.value = "create-new";
-    createNewOption.textContent = "➕ Create New Project";
+    createNewOption.textContent = "Create New Project ➕";
     select.appendChild(createNewOption);
 
     select.onchange = function () {
@@ -177,6 +187,120 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
   }
+
+  // Disable tab click on configuration screen
+  document.querySelectorAll(".custom-nav .nav-link").forEach(link => {
+    link.addEventListener("click", e => e.preventDefault());
+  });
+
+  document.getElementById("go-to-step2")?.addEventListener("click", () => {
+    const requiredFields = document.querySelectorAll("#step1 input, #step1 textarea");
+  
+    for (let field of requiredFields) {
+      if (!field.value.trim()) {
+        const label = field.closest(".mb-3")?.querySelector("label")?.innerText || "This field";
+        showToast(`Please fill the "${label}"`, "danger");
+        field.focus();
+        return; // Prevent tab switch
+      }
+    }
+  
+    // Proceed to next tab if all fields are filled
+    document.getElementById("step1").classList.remove("show", "active");
+    document.getElementById("step2").classList.add("show", "active");
+  
+    const tabs = document.querySelectorAll(".custom-nav .nav-link");
+    tabs[0].classList.remove("active");
+    tabs[1].classList.add("active");
+  });
+  
+
+  // Handle previous buttons
+  document.querySelectorAll(".previestab").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const prevTabId = this.dataset.previous;
+      const prevButton = document.querySelector(`#${prevTabId}`);
+      if (prevButton) {
+        // Switch nav tab
+        document.querySelectorAll(".custom-nav .nav-link").forEach(el => el.classList.remove("active"));
+        prevButton.classList.add("active");
+  
+        // Switch tab content
+        const targetTabPane = prevButton.dataset.bsTarget;
+        if (targetTabPane) {
+          document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("show", "active"));
+          const tabPane = document.querySelector(targetTabPane);
+          if (tabPane) tabPane.classList.add("show", "active");
+        }
+      }
+    });
+  });
+    
+
+  document.getElementById("well-config-form")?.addEventListener("submit", async function (e) {
+    e.preventDefault();
+  
+    const getVal = (id) => document.getElementById(id)?.value?.trim() || "";
+    const showError = (msg) => showToast(msg, "danger");
+  
+    const inputs = {
+      clientName: getVal("client-name"),
+      fieldName: getVal("field-name"),
+      wellNumber: getVal("well-number"),
+      wellHistory: getVal("well-history"),
+      drilledOn: getVal("drilled-on"),
+      completedOn: getVal("completed-on"),
+      completionDate: getVal("completion-date"),
+      formationType: getVal("formation-type"),
+      lastOperation: getVal("last-operation"),
+      wellHistoryDetails: getVal("well-history-details"),
+      surfaceLocation: getVal("surface-location"),
+      rigElevation: getVal("rig-elevation"),
+      casingDetails: getVal("casing-details"),
+      criticalDepth: getVal("critical-depth"),
+      tubingDetails: getVal("tubing-details"),
+      maxDeviation: getVal("max-deviation"),
+      reservoirPressure: getVal("reservoir-pressure"),
+      reservoirTemperature: getVal("reservoir-temperature"),
+      lastHud: getVal("last-hud"),
+      perforationInterval: getVal("perforation-interval"),
+      payZone: getVal("pay-zone"),
+      minimumId: getVal("minimum-id"),
+      wellStatus: getVal("well-status"),
+    };
+  
+    // Validate required fields
+    for (let key in inputs) {
+      if (!inputs[key]) return showError(`Please fill "${key}"`);
+    }
+  
+    const projectSelect = document.querySelector("#project-dropdown select");
+    const projectId = projectSelect?.value;
+    if (!projectId || projectId === "create-new") return showError("Select a valid project first.");
+  
+    const files = {
+      completionPicture: document.getElementById("completion-picture")?.files[0],
+      wellProgram: document.getElementById("well-program")?.files[0],
+      designService: document.getElementById("design-service")?.files[0]
+    };
+  
+    try {
+      const result = await window.electron.invoke("save-well-config", {
+        projectId,
+        inputs,
+        files
+      });
+  
+      if (result?.success) {
+        showToast("Configuration saved successfully!", "success");
+      } else {
+        showToast("Failed to save configuration.", "danger");
+      }
+    } catch (err) {
+      console.error("Save Error:", err);
+      showToast("Unexpected error occurred.", "danger");
+    }
+  });  
 
   // Disable Scan button when clicked
   scanBtn?.addEventListener("click", () => {
@@ -247,6 +371,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  /* Create project full screen login with project listing */
+
   async function dashboardFullScreen() {
     document.querySelector(".app-menu")?.classList.add("d-none");
     document.getElementById("dashboard")?.classList.add("full-width-dashboard");
@@ -274,6 +400,8 @@ document.addEventListener("DOMContentLoaded", function () {
       container.appendChild(div);
     });
   }
+
+  /* Recent project list click logic from project creation screen */
   
   document.getElementById("recent-projects")?.addEventListener("click", async function (e) {
     
@@ -295,6 +423,8 @@ document.addEventListener("DOMContentLoaded", function () {
     showSidebarSection("configuration");
   });  
 
+  /* Revert full screen to sidebar logic */
+
   function revertFullscreenLayout() {
     const appMenu = document.querySelector(".app-menu");
     const dashboard = document.getElementById("dashboard");
@@ -305,6 +435,7 @@ document.addEventListener("DOMContentLoaded", function () {
     topbar.style.left = "";
   }
 
+  /* Alert message is replaced with Toast at the bottom right corner */
 
   function showToast(message, type, duration = 3000) {
     const toast = document.getElementById("toast");
@@ -519,7 +650,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Show 'login' section by default
+  /* Show login screen on app launch */
+
   showMainSection("login");
 });
 
