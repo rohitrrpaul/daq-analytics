@@ -36,6 +36,7 @@ function createMainWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      webSecurity: false,
       preload: path.join(__dirname, "preload.js"),
     },
   });
@@ -150,7 +151,7 @@ ipcMain.handle("create-project", async (_, name) => {
 
 ipcMain.handle("get-projects", async () => {
   const db = new sqlite3.Database("./database/daqanalytics.db");
-
+ 
   return new Promise((resolve) => {
     db.all("SELECT id, name FROM projects ORDER BY id DESC", (err, rows) => {
       if (err) return resolve([]);
@@ -160,20 +161,23 @@ ipcMain.handle("get-projects", async () => {
 });
 
 ipcMain.handle("save-well-config", async (event, data) => {
-  const {
-    projectId, inputs, files
-  } = data;
-
+  
+  const { projectId, inputs = {}, files = {} } = data;
   const folderPath = path.join(__dirname, "uploads", `${projectId}`);
   if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath, { recursive: true });
 
   const saveFile = (fileObj, fieldName) => {
-    if (!fileObj?.path) return null;
+    if (!fileObj?.content?.length) {
+      console.log(`No file data for ${fieldName}`);
+      return null;
+    }
+    const buffer = Buffer.from(fileObj.content);
     const dest = path.join(folderPath, `${fieldName}_${Date.now()}_${fileObj.name}`);
-    fs.copyFileSync(fileObj.path, dest);
+    fs.writeFileSync(dest, buffer);
     return dest;
-  };
+  };  
 
+  const clientLogo = saveFile(files.clientLogo, "client_logo");
   const completionPicture = saveFile(files.completionPicture, "completion_picture");
   const wellProgram = saveFile(files.wellProgram, "well_program");
   const designService = saveFile(files.designService, "design_service");
@@ -181,22 +185,85 @@ ipcMain.handle("save-well-config", async (event, data) => {
   return new Promise((resolve, reject) => {
     db.run(`
       INSERT INTO configuration (
-        project_id, client_name, field_name, well_number, well_history,
+        project_id, client_name, client_logo, field_name, well_number, well_history,
         drilled_on, completed_on, completion_date, formation_type,
         last_operation, well_history_details, surface_location, rig_elevation,
         casing_details, critical_depth, tubing_details, max_deviation,
         reservoir_pressure, reservoir_temperature, last_hud,
         perforation_interval, pay_zone, minimum_id, well_status,
         completion_picture_path, well_program_path, design_service_path
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
-      projectId, inputs.clientName, inputs.fieldName, inputs.wellNumber, inputs.wellHistory,
+      projectId, inputs.clientName, clientLogo, inputs.fieldName, inputs.wellNumber, inputs.wellHistory,
       inputs.drilledOn, inputs.completedOn, inputs.completionDate, inputs.formationType,
       inputs.lastOperation, inputs.wellHistoryDetails, inputs.surfaceLocation, inputs.rigElevation,
       inputs.casingDetails, inputs.criticalDepth, inputs.tubingDetails, inputs.maxDeviation,
       inputs.reservoirPressure, inputs.reservoirTemperature, inputs.lastHud,
-      inputs.perforationInterval, inputs.payZone, inputs.minimumId, inputs.wellStatus,
-      completionPicture, wellProgram, designService
+      inputs.perforationInterval, inputs.payZone, inputs.minimumId, inputs.wellStatus, completionPicture, wellProgram, designService
+    ], function (err) {
+      if (err) return reject(err);
+      resolve({ success: true });
+    });    
+  });
+});
+
+ipcMain.handle("get-configuration", async (event, projectId) => {
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database("./database/daqanalytics.db");
+
+    db.get("SELECT * FROM configuration WHERE project_id = ?", [projectId], (err, row) => {
+      if (err) {
+        console.error("DB error:", err);
+        reject(err);
+      } else {
+        console.log("Fetched row:", row);
+        resolve(row || null);
+      }
+    });
+  });
+});
+
+ipcMain.handle("save-file", async (event, { fileObj, fieldName, projectId }) => {
+  try {
+    const folderPath = path.join(__dirname, "uploads", `${projectId}`);
+    if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath, { recursive: true });
+
+    const buffer = Buffer.from(fileObj.content);
+    const fileName = `${fieldName}_${Date.now()}_${fileObj.name}`;
+    const dest = path.join(folderPath, fileName);
+
+    fs.writeFileSync(dest, buffer);
+    return fileName;
+  } catch (err) {
+    console.error("File save failed:", err);
+    throw err;
+  }
+});
+
+// Handle update
+ipcMain.handle("update-configuration", async (event, config) => {
+  return new Promise((resolve, reject) => {
+    const stmt = db.prepare(`
+      UPDATE configuration
+      SET 
+        client_name = ?, client_logo = ?, field_name = ?, well_number = ?, well_history = ?,
+        drilled_on = ?, completed_on = ?, completion_date = ?, formation_type = ?,
+        last_operation = ?, well_history_details = ?, surface_location = ?, rig_elevation = ?,
+        casing_details = ?, critical_depth = ?, tubing_details = ?, max_deviation = ?,
+        reservoir_pressure = ?, reservoir_temperature = ?, last_hud = ?,
+        perforation_interval = ?, pay_zone = ?, minimum_id = ?, well_status = ?,
+        completion_picture_path = ?, well_program_path = ?, design_service_path = ?
+      WHERE project_id = ?
+    `);
+
+    stmt.run([
+      config.clientName, config.clientLogo, config.fieldName, config.wellNumber, config.wellHistory,
+      config.drilledOn, config.completedOn, config.completionDate, config.formationType,
+      config.lastOperation, config.wellHistoryDetails, config.surfaceLocation, config.rigElevation,
+      config.casingDetails, config.criticalDepth, config.tubingDetails, config.maxDeviation,
+      config.reservoirPressure, config.reservoirTemperature, config.lastHud,
+      config.perforationInterval, config.payZone, config.minimumId, config.wellStatus,
+      config.completionPicture, config.wellProgram, config.designService, config.projectId
     ], function (err) {
       if (err) return reject(err);
       resolve({ success: true });

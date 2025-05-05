@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password-input");
   const loginBtn = document.getElementById("submit-login");
+  let currentProjectId = null;
+  let isEditMode = false;
 
   /* Login button disable validation */
 
@@ -185,6 +187,11 @@ document.addEventListener("DOMContentLoaded", function () {
         dashboardFullScreen();
         document.getElementById("project-name").value = "";
       }
+      else {
+        currentProjectId = this.value;
+        loadConfigurationForProject(currentProjectId);
+      }
+      openStep1Tab();
     };
   }
 
@@ -195,8 +202,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("go-to-step2")?.addEventListener("click", () => {
     const requiredFields = document.querySelectorAll("#step1 input, #step1 textarea");
-  
+
     for (let field of requiredFields) {
+      const fieldId = field.id;
+
+      // Skip client logo check during edit mode
+      if (isEditMode && fieldId === "client-logo") continue;
+
       if (!field.value.trim()) {
         const label = field.closest(".mb-3")?.querySelector("label")?.innerText || "This field";
         showToast(`Please fill the "${label}"`, "danger");
@@ -204,16 +216,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return; // Prevent tab switch
       }
     }
-  
+
     // Proceed to next tab if all fields are filled
     document.getElementById("step1").classList.remove("show", "active");
     document.getElementById("step2").classList.add("show", "active");
-  
+
     const tabs = document.querySelectorAll(".custom-nav .nav-link");
     tabs[0].classList.remove("active");
     tabs[1].classList.add("active");
   });
-  
+
 
   // Handle previous buttons
   document.querySelectorAll(".previestab").forEach(btn => {
@@ -224,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Switch nav tab
         document.querySelectorAll(".custom-nav .nav-link").forEach(el => el.classList.remove("active"));
         prevButton.classList.add("active");
-  
+
         // Switch tab content
         const targetTabPane = prevButton.dataset.bsTarget;
         if (targetTabPane) {
@@ -235,13 +247,15 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-    
-
+  
   document.getElementById("well-config-form")?.addEventListener("submit", async function (e) {
     e.preventDefault();
   
     const getVal = (id) => document.getElementById(id)?.value?.trim() || "";
     const showError = (msg) => showToast(msg, "danger");
+  
+    const projectId = document.querySelector("#project-select")?.value;
+    if (!projectId || projectId === "create-new") return showError("Select a valid project");
   
     const inputs = {
       clientName: getVal("client-name"),
@@ -266,41 +280,74 @@ document.addEventListener("DOMContentLoaded", function () {
       perforationInterval: getVal("perforation-interval"),
       payZone: getVal("pay-zone"),
       minimumId: getVal("minimum-id"),
-      wellStatus: getVal("well-status"),
+      wellStatus: getVal("well-status")
     };
   
-    // Validate required fields
     for (let key in inputs) {
       if (!inputs[key]) return showError(`Please fill "${key}"`);
     }
   
-    const projectSelect = document.querySelector("#project-dropdown select");
-    const projectId = projectSelect?.value;
-    if (!projectId || projectId === "create-new") return showError("Select a valid project first.");
+    const getFile = async (id) => {
+      const input = document.getElementById(id);
+      if (!input || !input.files || input.files.length === 0) return null;
+      const file = input.files[0];
+      const buffer = await file.arrayBuffer();
+      return {
+        name: file.name,
+        content: Array.from(new Uint8Array(buffer))
+      };
+    };
   
     const files = {
-      completionPicture: document.getElementById("completion-picture")?.files[0],
-      wellProgram: document.getElementById("well-program")?.files[0],
-      designService: document.getElementById("design-service")?.files[0]
+      clientLogo: await getFile("client-logo"),
+      completionPicture: await getFile("completion-picture"),
+      wellProgram: await getFile("well-program"),
+      designService: await getFile("design-service")
+    };
+  
+    const saveIfPresent = async (file, fieldName) => {
+      return file ? await window.electron.invoke("save-file", { fileObj: file, fieldName, projectId }) : null;
     };
   
     try {
-      const result = await window.electron.invoke("save-well-config", {
-        projectId,
-        inputs,
-        files
-      });
+      if (isEditMode) {
+        const result = await window.electron.updateConfiguration({
+          ...inputs,
+          projectId,
+          clientLogo: await saveIfPresent(files.clientLogo, "client_logo"),
+          completionPicture: await saveIfPresent(files.completionPicture, "completion_picture"),
+          wellProgram: await saveIfPresent(files.wellProgram, "well_program"),
+          designService: await saveIfPresent(files.designService, "design_service")
+        });
   
-      if (result?.success) {
-        showToast("Configuration saved successfully!", "success");
+        if (result?.success) showToast("Configuration updated!", "success");
+        else showToast("Update failed.", "danger");
+  
       } else {
-        showToast("Failed to save configuration.", "danger");
+        const result = await window.electron.invoke("save-well-config", {
+          projectId,
+          inputs,
+          files
+        });
+  
+        if (result?.success) showToast("Configuration saved!", "success");
+        else showToast("Save failed.", "danger");
       }
     } catch (err) {
-      console.error("Save Error:", err);
+      console.error("Submit Error:", err);
       showToast("Unexpected error occurred.", "danger");
     }
-  });  
+  });
+
+  async function saveFileToDisk(fileObj, fieldName, projectId) {
+    const folderPath = path.join(__dirname, "uploads", `${projectId}`);
+    if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath, { recursive: true });
+    const buffer = Buffer.from(fileObj.content);
+    const fileName = `${fieldName}_${Date.now()}_${fileObj.name}`;
+    const dest = path.join(folderPath, fileName);
+    fs.writeFileSync(dest, buffer);
+    return fileName;
+  }  
 
   // Disable Scan button when clicked
   scanBtn?.addEventListener("click", () => {
@@ -377,12 +424,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".app-menu")?.classList.add("d-none");
     document.getElementById("dashboard")?.classList.add("full-width-dashboard");
     document.getElementById("page-topbar").style.left = "0";
-  
+
     const container = document.getElementById("recent-projects");
     container.innerHTML = "";
-  
+
     const projects = await window.electron.getProjects();
-  
+
     if (projects.length === 0) {
       const noProjectDiv = document.createElement("div");
       noProjectDiv.className = "bg-danger bg-opacity-10 border border-danger text-danger p-3 rounded mb-2";
@@ -390,9 +437,9 @@ document.addEventListener("DOMContentLoaded", function () {
       container.appendChild(noProjectDiv);
       return;
     }
-  
+
     // Sort and append
-    [...projects].reverse().forEach(project => {
+    projects.forEach(project => {
       const div = document.createElement("div");
       div.className = "bg-info bg-opacity-10 border border-info text-info p-3 rounded mb-2 cursor-pointer clickable-project";
       div.dataset.id = project.id;
@@ -402,26 +449,73 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* Recent project list click logic from project creation screen */
-  
+
   document.getElementById("recent-projects")?.addEventListener("click", async function (e) {
-    
+
     const clicked = e.target.closest(".clickable-project");
     if (!clicked) return;
-  
-    const projectId = clicked.dataset.id;
-    if (!projectId) return;
-  
+
+    currentProjectId = clicked.dataset.id;
+    if (!currentProjectId) {
+      return;
+    }
+    else {
+      loadConfigurationForProject(currentProjectId);
+    }
+
     await populateProjectsUI();
     const select = document.querySelector("#project-dropdown select");
     if (select) {
-      select.value = projectId;
+      select.value = currentProjectId;
       select.dispatchEvent(new Event("change"));
     }
-  
+
     revertFullscreenLayout();
     showMainSection("pages-with-side-bar");
     showSidebarSection("configuration");
-  });  
+    openStep1Tab();
+  });
+
+  async function loadConfigurationForProject(projectId) {
+
+    const data = await window.electron.invoke("get-configuration", parseInt(projectId));
+
+    const submitBtn = document.getElementById("config-submit-btn");
+
+    if (data) {
+      document.getElementById("client-name").value = data.client_name || "";
+      document.getElementById("field-name").value = data.field_name || "";
+      document.getElementById("well-number").value = data.well_number || "";
+      document.getElementById("well-history").value = data.well_history || "";
+      document.getElementById("drilled-on").value = data.drilled_on || "";
+      document.getElementById("completed-on").value = data.completed_on || "";
+      document.getElementById("completion-date").value = data.completion_date || "";
+      document.getElementById("formation-type").value = data.formation_type || "";
+      document.getElementById("last-operation").value = data.last_operation || "";
+      document.getElementById("well-history-details").value = data.well_history_details || "";
+      document.getElementById("surface-location").value = data.surface_location || "";
+      document.getElementById("rig-elevation").value = data.rig_elevation || "";
+      document.getElementById("casing-details").value = data.casing_details || "";
+      document.getElementById("critical-depth").value = data.critical_depth || "";
+      document.getElementById("tubing-details").value = data.tubing_details || "";
+      document.getElementById("max-deviation").value = data.max_deviation || "";
+      document.getElementById("reservoir-pressure").value = data.reservoir_pressure || "";
+      document.getElementById("reservoir-temperature").value = data.reservoir_temperature || "";
+      document.getElementById("last-hud").value = data.last_hud || "";
+      document.getElementById("perforation-interval").value = data.perforation_interval || "";
+      document.getElementById("pay-zone").value = data.pay_zone || "";
+      document.getElementById("minimum-id").value = data.minimum_id || "";
+      document.getElementById("well-status").value = data.well_status || "";
+      isEditMode = true;
+      submitBtn.textContent = "Edit";
+    } else {
+
+      // Clear fields
+      document.querySelectorAll("#well-config-form input, #well-config-form textarea").forEach(field => field.value = "");
+      submitBtn.textContent = "Submit";
+      isEditMode = false;
+    }
+  }
 
   /* Revert full screen to sidebar logic */
 
@@ -434,6 +528,16 @@ document.addEventListener("DOMContentLoaded", function () {
     dashboard?.classList.remove("full-width-dashboard");
     topbar.style.left = "";
   }
+
+  function openStep1Tab() {
+    // Reset tab pane visibility
+    document.getElementById("step1")?.classList.add("show", "active");
+    document.getElementById("step2")?.classList.remove("show", "active");
+  
+    // Reset tab header active state
+    document.getElementById("well-tab-header-1")?.classList.add("active");
+    document.getElementById("well-tab-header-2")?.classList.remove("active");
+  }  
 
   /* Alert message is replaced with Toast at the bottom right corner */
 
@@ -564,6 +668,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById(link.id)?.addEventListener("click", function (event) {
       event.preventDefault();
       showSidebarSection(link.target);
+      if (link.target === "configuration") {
+        openStep1Tab(); 
+      }
     });
   });
 

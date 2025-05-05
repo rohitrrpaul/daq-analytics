@@ -14,5 +14,8 @@ contextBridge.exposeInMainWorld("electron", {
   saveCredentials: (record) => ipcRenderer.invoke("save-credentials", record),
   getProjects: () => ipcRenderer.invoke("get-projects"),
 
+  getConfiguration: (projectId) => ipcRenderer.invoke("get-configuration", projectId),
+  updateConfiguration: (config) => ipcRenderer.invoke("update-configuration", config),
+
   invoke: (channel, ...args) => ipcRenderer.invoke(channel, ...args)
 });

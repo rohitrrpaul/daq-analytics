@@ -33,6 +33,7 @@ function initializeDatabase() {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             project_id INTEGER,
             client_name TEXT,
+            client_logo TEXT,
             field_name TEXT,
             well_number TEXT,
             well_history TEXT,
