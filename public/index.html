@@ -772,9 +772,9 @@
                                     <div class="d-flex align-items-center gap-2 mb-0">
                                         <label for="modbusToggle" class="form-check-label mb-0">Modbus</label>
                                         <div class="form-check form-switch mb-0">
-                                          <input class="form-check-input" type="checkbox" id="modbusToggle" checked>
+                                            <input class="form-check-input" type="checkbox" id="modbusToggle" checked>
                                         </div>
-                                      </div>
+                                    </div>
 
                                     <!-- Close Button -->
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -1625,10 +1625,10 @@
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div class="text-end mt-3">
                                             <button type="button"
                                                 class="btn btn-sm btn-info d-inline-flex align-items-center"
-                                                id="check_value">Check Values</button>
+                                                id="check_value">Submit Sensor Mapping</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1690,33 +1690,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="realTimeData-table table-responsive">
-                                <table class="table table-nowrap table-bordered ">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <td colspan="16" rowspan="2"></td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td rowspan="2"></td>
-                                            <td colspan="9" rowspan="2">Data sheet</td>
-                                            <td colspan="7">Well : </td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td colspan="26" rowspan="2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td colspan="7">Field : </td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
+                                <table class="table table-nowrap table-bordered">
+                                    <tbody>
+                                        <tr style="height: 23px" class="table-light">
+
                                             <td rowspan="4">Date</td>
                                             <td rowspan="4">Time</td>
                                             <td rowspan="4">Sequence of Event</td>
@@ -1739,981 +1716,610 @@
                                             <td colspan="2" rowspan="2">Diverter Manifold -1</td>
                                             <td colspan="2" rowspan="2">Diverter Manifold -2</td>
                                         </tr>
-                                        <tr></tr>
-                                        <tr>
+                                        <tr style="height: 40px" class="table-light">
+                                        </tr>
+                                        <tr style="height: 40px" class="table-light">
                                             <td colspan="2">Flowhead/Wellhead </td>
-                                            <td>&nbsp;</td>
+                                            <td></td>
                                             <td colspan="4">Sand Filter </td>
                                             <td colspan="4">Data Header </td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Wellhead Pressure</td>
-                                            <td>Wellhead Temp</td>
-                                            <td>Annulus Pressure</td>
-                                            <td>Sand Filter Upstream Pressure</td>
-                                            <td>Sand Filter Downstream Pressure</td>
-                                            <td> Sand Filter DP <br />Calculated </td>
-                                            <td>Sand Filter Differential Pressure Sensor</td>
-                                            <td>Choke Upstream Pressure</td>
-                                            <td>Choke Upstream <br />Temperature </td>
-                                            <td>Choke Downstream pressure.</td>
-                                            <td>Choke Downstream temperature</td>
-                                            <td>IWBH Upstream Temperature </td>
-                                            <td>IWBH Downstream Temperature </td>
-                                            <td>Heat Exchanger Pressure </td>
-                                            <td>Heat Exchanger Temperature</td>
-                                            <td>Fluid Header Pressure</td>
-                                            <td>Static Pressure </td>
-                                            <td>Static Temperature </td>
-                                            <td>Differential Pressure</td>
-                                            <td>Orifice Plate Size </td>
-                                            <td>Gas Flow Rate</td>
-                                            <td>Cummulative Gas volume</td>
-                                            <td>
-                                                <span>CO</span>
-                                                <span>2</span>
-                                                <span> Content </span>
-                                            </td>
-                                            <td>
-                                                <span>H</span>
-                                                <span>2</span>
-                                                <span>S Content</span>
-                                            </td>
-                                            <td>Specific Gravity Of Gas</td>
-                                            <td>Meter Factor</td>
-                                            <td>Shrinkage factor</td>
-                                            <td>Oil Flow Rate </td>
-                                            <td>Cummulative Oil Vilume</td>
-                                            <td>Specific Gravity of Oil @ 60ºF</td>
-                                            <td>API @ 60ºF</td>
-                                            <td>Basic Sediment &amp; Water </td>
-                                            <td>Separator Oil Line Temperature </td>
-                                            <td>Oil Line Water Cut Meter </td>
-                                            <td>Seperator Oil Chamber level </td>
-                                            <td>Meter Factor</td>
-                                            <td>Water Flow Rate</td>
-                                            <td>Cumulative Water Volume</td>
-                                            <td>Salinity</td>
-                                            <td>pH</td>
-                                            <td>Separator Water Chamber Level </td>
-                                            <td>Liquid Flow Rate </td>
-                                            <td>Liquid cummulative Volume</td>
-                                            <td>Gas Oil Ratio</td>
-                                            <td>Oil Gas Ratio</td>
-                                            <td>Condensate gas Ratio</td>
-                                            <td>Water Gas Ratio</td>
-                                            <td>Sand Quantity</td>
-                                            <td>Surge Tank Pressure</td>
-                                            <td> Surge Tank Temperature </td>
-                                            <td>Surge tank Liquid Level Chamber</td>
-                                            <td>Knock out Drum Pressure</td>
-                                            <td>Knock out Drum Temperature </td>
-                                            <td>Knock out Drum Liquid Level Chamber</td>
-                                            <td> Storage Tank Liquid Level Chamber </td>
-                                            <td> Storage Tank Temperature </td>
-                                            <td> Pump Disharge pressure </td>
-                                            <td> Diverter Manifold pressure (Psig ) </td>
-                                            <td> Diverter Manifold Temperature (Deg C) </td>
-                                            <td> Diverter Manifold pressure (Psig ) </td>
-                                            <td> Diverter Manifold Temperature (Deg C) </td>
-                                        </tr>
-                                        <tr class="highlight-row">
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">/ 64"</option>
-                                                        <option value="2">/ 64"</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">ltr/hr</option>
-                                                        <option value="2">ltr/hr</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">"H2O</option>
-                                                        <option value="2">"H2O</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">in (")</option>
-                                                        <option value="2">in (")</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">mmscf/d</option>
-                                                        <option value="2">mmscf/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">mmscf</option>
-                                                        <option value="2">mmscf</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">%</option>
-                                                        <option value="2">Cm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">ppm</option>
-                                                        <option value="2">ppm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">%</option>
-                                                        <option value="2">Cm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/d</option>
-                                                        <option value="2">bbl/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/d</option>
-                                                        <option value="2">bbl/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">%</option>
-                                                        <option value="2">%</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/d</option>
-                                                        <option value="2">bbl/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">mm</option>
-                                                        <option value="2">cm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/d</option>
-                                                        <option value="2">bbl/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/d</option>
-                                                        <option value="2">bbl/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">NaCl in ppm</option>
-                                                        <option value="2">NaCl in ppm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">mm</option>
-                                                        <option value="2">cm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/d</option>
-                                                        <option value="2">bbl/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/d</option>
-                                                        <option value="2">bbl/d</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            </td>
-                                            <td class="hd-end">
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/mscf</option>
-                                                        <option value="2">bbl/mscf</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">mscf/bbl</option>
-                                                        <option value="2">mscf/bbl</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/mscf</option>
-                                                        <option value="2">bbl/mscf</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">bbl/mscf</option>
-                                                        <option value="2">bbl/mscf</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">Kg</option>
-                                                        <option value="2">Kg</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">cm</option>
-                                                        <option value="2">mm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">mm</option>
-                                                        <option value="2">cm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">cm</option>
-                                                        <option value="2">cm</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">psi(g)</option>
-                                                        <option value="2">psi(g)</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="hd-end">
-                                                <div class="table-selectBox form-group custom-select">
-                                                    <select class="form-control">
-                                                        <option value="0">Select</option>
-                                                        <option value="1">°C</option>
-                                                        <option value="2">°F</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-
-
-                                        </tr>
-                                        <tr class="highlight-row-active">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>                                        
+                                        <tr style="height: 69px" class="table-light">
+                                            <td class="sensor">WHP</td>
+                                            <td class="sensor">WHT</td>
+                                            <td class="sensor">Ann. Pr.</td>
+                                            <td class="sensor">SF U/S</td>
+                                            <td class="sensor">SF D/S</td>
+                                            <td class="sensor">SF DP</td>
+                                            <td class="calculated">Sand Filter Differential Pressure Sensor</td>
+                                            <td class="sensor">Choke U/S Pr.</td>
+                                            <td class="sensor">Choke U/S Temp.</td>
+                                            <td class="sensor">Choke D/S Pr.</td>
+                                            <td class="sensor">Choke D/S Temp.</td>
+                                            <td class="sensor">IWBH U/S Temp.</td>
+                                            <td class="sensor">IWBH D/S Temp.</td>
+                                            <td class="sensor">Heat Exc. Pr.</td>
+                                            <td class="sensor">Heat Exc. Te.</td>
+                                            <td class="sensor">Fluid He. Pr.</td>
+                                            <td class="sensor">Sep. Pressure</td>
+                                            <td class="sensor">Sep. Temp.</td>
+                                            <td class="sensor">Sep. Diff. Pr.</td>
+                                            <td class="manual">Orfice Size</td>
+                                            <td class="calculated">Gas Flow. Ra.</td>
+                                            <td class="calculated">Cumm. Gas VoL.</td>
+                                            <td class="manual">CO2 Content</td>
+                                            <td class="manual">H2S Content</td>
+                                            <td class="manual">SG of Gas</td>
+                                            <td class="manual">Meter Factor</td>
+                                            <td class="manual">Shr. Factor</td>
+                                            <td class="calculated">Oil Flow Rate</td>
+                                            <td class="sensor">Cum. Oil</td>
+                                            <td class="manual">SG Oil  @ 60ºF</td>
+                                            <td class="calculated">API  @ 60ºF</td>
+                                            <td class="manual">BS&W</td>
+                                            <td class="sensor">Sep. Oil Line Temp.</td>
+                                            <td class="sensor">Water cut</td>
+                                            <td class="sensor">Sep. Oil Level</td>
+                                            <td class="manual">Met. Factor</td>
+                                            <td class="calculated">Water Rate</td>
+                                            <td class="sensor">Cum. Water</td>
+                                            <td class="manual">Salinity</td>
+                                            <td class="manual">pH</td>
+                                            <td class="sensor">Sep. Water Level</td>
+                                            <td class="calculated">Liquid Rate</td>
+                                            <td class="sensor">Liquid cum. Vol.</td>
+                                            <td class="calculated">GOR</td>
+                                            <td class="calculated">OGR</td>
+                                            <td class="calculated">CGR</td>
+                                            <td class="calculated">WGR</td>
+                                            <td class="sensor">Sand Qty.</td>
+                                            <td class="sensor">SUT Pr.</td>
+                                            <td class="sensor">SUT. Temp.</td>
+                                            <td class="sensor">SUT. Liq. Level-1</td>
+                                            <td class="sensor">KOD Pr.</td>
+                                            <td class="sensor">KOD Temp.</td>
+                                            <td class="sensor">KOD Liq. Level-1</td>
+                                            <td class="sensor">STO Liq. Level</td>
+                                            <td class="sensor">STO Temp.</td>
+                                            <td class="sensor">Pump Dis. Pr.</td>
+                                            <td class="sensor">DM-1 Pr.</td>
+                                            <td class="sensor">DM-1 Temp.</td>
+                                            <td class="sensor">DM-2 Pr.</td>
+                                            <td class="sensor">DM-2 Temp.</td>
+                                        </tr>                                                                               
+                                        <tr style="height: 23px" class="highlight-row">
                                             <td>dd-Mmm-yy</td>
                                             <td>HH:mm</td>
-                                            <td>&nbsp;</td>
-                                            <td><input type="text" class="heading-input" value='0'></td>
-                                            <td><input type="text" class="heading-input" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-                                            <td><input type="text" class="heading-input text-end" value='0'></td>
-
-                                            <td class="hd-end"> <input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td></td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end">&nbsp;</td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td></td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                            <td class="hd-end"><input type="text" class="heading-input text-end"
-                                                    value='0'>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
                                             </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control realtime-select">
+                                                    <option value="0">Unit</option>
+                                                    <option value="">Option 1</option> 
+                                                    <option value="">Option 2</option> 
+                                                </select>
+                                            </td>
+                                        </tr>                                        
+                                        <tr style="height: 18px">
                                             <td>16-Jul-22</td>
                                             <td>10:15</td>
-                                            <td>&nbsp;</td>
-                                            <td>
-                                                <input type="text" class="content-input" value='Var.Adj.'>
-                                            </td>
-                                            <td><input type="text" class="content-input" value=''></td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='279'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='68'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='180'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='274'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='272'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='2'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='2'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='274'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='65'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='150'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='34'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='33'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='53'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='279'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='68'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='128'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='174'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='30'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='130'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.750'>
-                                            </td>
-                                            <td class="text-end">-</td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.600'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='10'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='20'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.734'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.943'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='343'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.120'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='45'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.055'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='10'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='133'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.055'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='10'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='476'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='0.175'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='-'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='#VALUE!'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='2.300'>
-                                            </td>
-                                            <td class="text-end"><input type="text" class="content-input text-end"
-                                                    value='30'></td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='26'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='10'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='28'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='24'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='2'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='8'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='24'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='138'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='30'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='26'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='29'>
-                                            </td>
-                                            <td class="text-end">
-                                                <input type="text" class="content-input text-end" value='25'>
-                                            </td>
-                                        </tr>
+                                            <td></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                            <td><input type="text" class="content-input text-end" value='1'></td>
+                                        </tr>                                        
 
                                     </tbody>
                                 </table>
+
+
                             </div>
                         </div>
                     </div>

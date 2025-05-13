@@ -255,6 +255,20 @@ background: #222328;
    .custom-select {
 	position: relative;
    }
+
+   .realtime-select {
+		padding: 4px 8px;
+		border-radius: 0;
+		font-size: 9px;
+	}
+
+	.manual{
+		background-color: #c9f9c8 !important;
+	}
+
+	.calculated{
+		background-color: #f9d6c8 !important;
+	}
    
    .custom-select select {
 	border-radius: 0;
