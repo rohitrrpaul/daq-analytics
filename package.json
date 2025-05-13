@@ -1,0 +1,79 @@
+{
+  "name": "daq-analytics",
+  "type": "commonjs",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "package": "electron-builder --win --x64",
+    "dist": "electron-builder"
+  },
+  "keywords": [],
+  "author": "Excelloite Pvt. Ltd.",
+  "license": "ISC",
+  "description": "DAQ Analytics is a powerful data acquisition tool.",
+  "dependencies": {
+    "@serialport/parser-readline": "^13.0.0",
+    "axios": "^1.8.3",
+    "dayjs": "^1.11.13",
+    "electron-updater": "^6.3.9",
+    "modbus-serial": "^8.0.20-no-serial-port",
+    "serialport": "^13.0.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "electron": "^35.0.2",
+    "electron-builder": "^26.0.12",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "build": {
+    "appId": "com.daq.analytics",
+    "productName": "DAQ Analytics",
+    "asar": true,
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!node_modules/.bin",
+      "!**/*.map",
+      "!**/*.ts"
+    ],
+    "extraResources": [
+      {
+        "from": "public/",
+        "to": "public"
+      }
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "repo": "daq-analytics",
+        "owner": "rohitrrpaul",
+        "releaseType": "draft"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true
+    }
+  }
+}
