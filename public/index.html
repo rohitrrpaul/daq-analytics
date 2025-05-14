@@ -1679,8 +1679,8 @@
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                 <h4 class="mb-sm-0">Real Time Data</h4>
                                 <div>
-                                    <button class="btn btn-sm btn-success">Start</button>
-                                    <button class="btn btn-sm btn-danger">Stop</button>
+                                    <button id="start-realtime" class="btn btn-sm btn-success">Start</button>
+                                    <button id="stop-realtime" class="btn btn-sm btn-danger">Stop</button>
                                     <button class="btn btn-sm btn-info d-inline-flex align-items-center"><i
                                             class="ph ph-download fs-5 me-1"></i> Download PDF</button>
                                 </div>
@@ -1690,8 +1690,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="realTimeData-table table-responsive">
+                                <div class="table-wrapper">
                                 <table class="table table-nowrap table-bordered">
-                                    <tbody>
+                                    <thead>
                                         <tr style="height: 23px" class="table-light">
 
                                             <td rowspan="4">Date</td>
@@ -1836,7 +1837,7 @@
                                             <td class="sensor">DM-1 Temp.</td>
                                             <td class="sensor">DM-2 Pr.</td>
                                             <td class="sensor">DM-2 Temp.</td>
-                                        </tr>                                                                               
+                                        </tr>                                                                         
                                         <tr style="height: 23px" class="highlight-row">
                                             <td>dd-Mmm-yy</td>
                                             <td>HH:mm</td>
@@ -2246,79 +2247,13 @@
                                                     <option value="">Option 2</option> 
                                                 </select>
                                             </td>
-                                        </tr>                                        
-                                        <tr style="height: 18px">
-                                            <td>16-Jul-22</td>
-                                            <td>10:15</td>
-                                            <td></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                            <td><input type="text" class="content-input text-end" value='1'></td>
-                                        </tr>                                        
+                                        </tr>  
+                                    </thead>
+                                    <tbody>                                                                              
 
                                     </tbody>
                                 </table>
-
+</div>
 
                             </div>
                         </div>

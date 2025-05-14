@@ -36,6 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
     [0, 100]
   ];
 
+  let realtimeIntervalId = null;
+  let realtimeMappings = [];
+  let refreshRate = 5000;
+
   /* Login button disable validation */
 
   function validateLoginFields() {
@@ -353,16 +357,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  async function saveFileToDisk(fileObj, fieldName, projectId) {
-    const folderPath = path.join(__dirname, "uploads", `${projectId}`);
-    if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath, { recursive: true });
-    const buffer = Buffer.from(fileObj.content);
-    const fileName = `${fieldName}_${Date.now()}_${fileObj.name}`;
-    const dest = path.join(folderPath, fileName);
-    fs.writeFileSync(dest, buffer);
-    return fileName;
-  }
-
   // Disable Scan button when clicked
   scanBtn?.addEventListener("click", () => {
     scanBtn.disabled = true; // ✅ disable on click
@@ -491,9 +485,10 @@ document.addEventListener("DOMContentLoaded", function () {
       modbusAddressMap[currentAddress] = value;
 
       const row = document.createElement("tr");
+      row.dataset.address = currentAddress;
       row.innerHTML = `
         <th scope="row"><a href="#" class="fw-medium">${currentAddress}</a></th>
-        <td>${value}</td>
+        <td data-value>${value}</td>
       `;
       tbody.appendChild(row);
     }
@@ -594,13 +589,24 @@ document.addEventListener("DOMContentLoaded", function () {
       modbusAddressMap[currentAddress] = value;
 
       const row = document.createElement("tr");
+      row.dataset.address = currentAddress;
       row.innerHTML = `
       <th scope="row"><a href="#" class="fw-medium">${currentAddress}</a></th>
-      <td>${value}</td>
+      <td data-value>${value}</td>
     `;
       tbody.appendChild(row);
     }
   });
+
+  function getValueFromAddressTable(address) {
+    const row = document.querySelector(`.table tbody tr[data-address="${address}"]`);
+    if (!row) return null;
+  
+    const valueCell = row.querySelector("td[data-value]");
+    if (!valueCell) return null;
+  
+    return valueCell.textContent.trim();
+  }  
 
   /* Create project full screen login with project listing */
 
@@ -889,14 +895,106 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
   sidebarLinks.forEach(link => {
-    document.getElementById(link.id)?.addEventListener("click", function (event) {
+    document.getElementById(link.id)?.addEventListener("click", async function (event) {
       event.preventDefault();
       showSidebarSection(link.target);
       if (link.target === "configuration") {
         openStep1Tab();
       }
+
+      if (link.target === "realtime-data") {
+        if (!currentProjectId) {
+          showToast("Select a project first", "danger");
+          return;
+        }
+  
+        // Load sensor mappings
+        try {
+          realtimeMappings = await window.electron.getSensorMappings(currentProjectId);
+          
+        } catch (err) {
+          console.error("Failed to load sensor mappings:", err);
+          showToast("Sensor mappings not found", "danger");
+          return;
+        }
+  
+        // Get refresh interval
+        const refreshInput = document.querySelector("input.product-quantity");
+        const intervalValue = parseInt(refreshInput?.value || "5", 10);
+        refreshRate = isNaN(intervalValue) ? 5000 : intervalValue * 1000;
+  
+        // Ensure header is visible
+        document.querySelector("#realtime-data thead")?.classList.remove("hide-div");
+      }
     });
   });
+
+  document.querySelector("#start-realtime")?.addEventListener("click", function () {
+    if (realtimeIntervalId) clearInterval(realtimeIntervalId); // Clear any existing
+  
+    realtimeIntervalId = setInterval(() => {
+      generateRealtimeRow();
+    }, refreshRate);
+  
+    showToast("⏱️ Real-time data recording started", "success");
+  });
+
+  document.querySelector("#stop-realtime")?.addEventListener("click", function () {
+    clearInterval(realtimeIntervalId);
+    realtimeIntervalId = null;
+    showToast("⛔ Real-time data recording stopped", "danger");
+  });
+
+  function generateRealtimeRow() {
+    const tbody = document.querySelector("#realtime-data tbody");
+    if (!tbody) return;
+  
+    const newRow = document.createElement("tr");
+    newRow.style.height = "18px";
+  
+    const now = new Date();
+    const date = now.toLocaleDateString("en-GB").replace(/\//g, "-");
+    const time = now.toTimeString().split(" ")[0].slice(0, 5);
+  
+    const initialColumns = [
+      `<td>${date}</td>`,
+      `<td>${time}</td>`,
+      `<td></td>`,
+      `<td><input type="text" class="content-input text-end" value=""></td>`,
+      `<td><input type="text" class="content-input text-end" value=""></td>`
+    ];
+    let rowHtml = initialColumns.join("");
+  
+    // Select only the annotation header row (sensors + calculated + manual)
+    const annotationRow = Array.from(document.querySelectorAll("#realtime-data thead tr")).find(row => {
+      return Array.from(row.children).some(cell =>
+        cell.classList.contains("sensor") ||
+        cell.classList.contains("calculated") ||
+        cell.classList.contains("manual")
+      );
+    });
+  
+    if (!annotationRow) {
+      console.warn("⚠️ Annotation row not found.");
+      return;
+    }
+  
+    const cells = annotationRow.querySelectorAll("td, th");
+    cells.forEach(cell => {
+      const annotation = cell.innerText.trim();
+      const mapping = realtimeMappings.find(m => m.annotation === annotation);
+  
+      if (mapping) {
+        const liveValue = getValueFromAddressTable(mapping.value); // mapping.value stores the Modbus address
+        rowHtml += `<td><input type="text" class="content-input text-end" value="${liveValue || ""}"></td>`;
+      } else {
+        rowHtml += `<td><input type="text" class="content-input text-end" value=""></td>`;
+      }
+    });
+  
+    newRow.innerHTML = rowHtml;
+    tbody.appendChild(newRow);
+  }  
 
   // Hide and show text inputs on toggle of checkbox on sensor mapping page
   document.querySelectorAll(".form-check-input[type='checkbox']").forEach((checkbox) => {
@@ -990,6 +1088,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
   showMainSection("login");
 });
-
-
-
