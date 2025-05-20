@@ -1,3 +1,12 @@
 Give Permission - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 Build exe - npx electron-packager . DAQ-Analytics --platform=win32 --arch=x64 --out=dist --overwrite
 Build win exe - npm run dist
+
+git init
+git checkout -b main
+git add .
+git commit -m "Reinitialized repository"
+git remote set-url origin https://rohitrrpaul@github.com/rohitrrpaul/daq-analytics.git
+git push -u origin main --force
+
+

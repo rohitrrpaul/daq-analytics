@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentProjectId = null;
   let isEditMode = false;
   const modbusToggle = document.getElementById("modbusToggle");
+  let worker = null;
   let isRealtimeRunning = false;
   let isRealtimePaused = false;
   let realtimeInterval = null;
@@ -462,7 +463,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function getRandomInRange(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return (Math.random() * (max - min) + min).toFixed(2);
   }
 
   function generateSimulatedData(lastAddress, length) {
@@ -937,32 +938,93 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  document.querySelector("#start-realtime")?.addEventListener("click", function () {
+  document.querySelector("#start-realtime")?.addEventListener("click", async function () {
 
     if (!isRealtimeRunning) {
-      // Initial start
+      if (!currentProjectId) {
+        showToast("Please select a project first.", "danger");
+        return;
+      }
+
+      if (!realtimeMappings.length) {
+        realtimeMappings = await window.electron.getSensorMappings(currentProjectId);
+      }
+
+      const refreshInput = document.querySelector("input.product-quantity");
+      const intervalValue = parseInt(refreshInput?.value || "5", 10);
+      refreshRate = isNaN(intervalValue) ? 5000 : intervalValue * 1000;
+
+      worker = new Worker("./assets/js/realtime-worker.js");
+      worker.postMessage({ mappings: realtimeMappings, interval: refreshRate });
+
+      worker.onmessage = (e) => {
+        if (!isRealtimePaused) {
+          appendRowToDOM(e.data);
+        }
+      };
+
       isRealtimeRunning = true;
       isRealtimePaused = false;
       startBtn.textContent = "Pause";
       stopBtn.disabled = false;
 
-      realtimeIntervalId = setInterval(() => {
-        if (!isRealtimePaused) generateRealtimeRow();
-      }, refreshRate);
-
-      showToast("⏱️ Real-time data recording started", "success");
-
+      showToast("⏱️ Real-time data started", "success");
     } else {
-      // Toggle Pause / Resume
       isRealtimePaused = !isRealtimePaused;
       startBtn.textContent = isRealtimePaused ? "Resume" : "Pause";
-
-      const toastMsg = isRealtimePaused
-        ? "⏸️ Real-time data paused"
-        : "▶️ Real-time data resumed";
-      showToast(toastMsg, isRealtimePaused ? "warning" : "success");
+      showToast(isRealtimePaused ? "⏸️ Paused" : "▶️ Resumed", isRealtimePaused ? "warning" : "success");
     }
   });
+
+  // Append a row to DOM using <td> for performance
+  function appendRowToDOM(data) {
+    const tbody = document.querySelector("#realtime-data tbody");
+    if (!tbody) return;
+
+    // Remove default 'No Data Found!' row
+    const noDataRow = Array.from(tbody.children).find(row => row.innerText.includes("No Data Found!"));
+    if (noDataRow) tbody.removeChild(noDataRow);
+
+    const fragment = document.createDocumentFragment();
+    const newRow = document.createElement("tr");
+
+    let rowHtml = `
+      <td>${data.date}</td>
+      <td>${data.time}</td>
+      <td class="editable-cell td-no-padding"></td>
+      <td class="editable-cell td-no-padding"></td>
+      <td class="editable-cell td-no-padding"></td>
+    `;
+
+    // Collect annotations from the header row
+    const annotationRow = Array.from(document.querySelectorAll("#realtime-data thead tr")).find(row =>
+      Array.from(row.children).some(cell =>
+        cell.classList.contains("sensor") ||
+        cell.classList.contains("calculated") ||
+        cell.classList.contains("manual")
+      )
+    );
+
+    if (!annotationRow) return;
+
+    const annotationCells = annotationRow.querySelectorAll("td, th");
+    const valuesByAnnotation = {};
+    data.values.forEach(v => {
+      valuesByAnnotation[v.annotation] = v.value;
+    });
+
+    annotationCells.forEach(cell => {
+      const annotation = cell.innerText.trim();
+      const val = valuesByAnnotation[annotation] || "";
+      const isNumber = !isNaN(parseFloat(val)) && isFinite(val);
+      const alignmentClass = isNumber ? "text-end" : "";
+      rowHtml += `<td class="editable-cell td-no-padding ${alignmentClass}">${val}</td>`;
+    });
+
+    newRow.innerHTML = rowHtml;
+    fragment.appendChild(newRow);
+    tbody.appendChild(fragment);
+  }
 
   document.querySelector("#stop-realtime")?.addEventListener("click", function () {
 
@@ -971,97 +1033,196 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmStop = confirm("Are you sure you want to stop real-time data?");
     if (!confirmStop) return;
 
-    clearInterval(realtimeIntervalId);
-    realtimeIntervalId = null;
+    worker?.terminate();
+    worker = null;
+
     isRealtimeRunning = false;
     isRealtimePaused = false;
-
     startBtn.textContent = "Start";
-    startBtn.disabled = true;
     stopBtn.disabled = true;
 
-    showToast("⛔ Real-time data recording stopped", "danger");
+    showToast("⛔ Real-time data stopped", "danger");
   });
 
-  function generateRealtimeRow() {
-    const tbody = document.querySelector("#realtime-data tbody");
-    if (!tbody) return;
+  document.addEventListener("click", function (event) {
+    const target = event.target;
 
-    const noDataRow = tbody.querySelector("tr");
-    if (noDataRow && noDataRow.innerText.includes("No Data Found!")) {
-      tbody.removeChild(noDataRow);
+    if (
+      target.tagName === "TD" &&
+      !target.querySelector("input") &&
+      target.classList.contains("editable-cell")
+    ) {
+      const currentValue = target.textContent.trim();
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = currentValue;
+      input.className = "editable-input";
+      input.style.width = "100%";
+      input.style.border = "0";
+      input.style.outline = "none";
+      input.style.backgroundColor = "transparent";
+      input.style.paddingRight = "0";
+      input.style.font = "inherit";
+      input.style.textAlign = "inherit";
+
+      target.textContent = "";
+      target.appendChild(input);
+      input.focus();
+
+      const saveInput = () => {
+        target.textContent = input.value.trim();
+      };
+
+      input.addEventListener("blur", saveInput);
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          input.blur();
+        }
+      });
     }
+  });
 
-    const newRow = document.createElement("tr");
-    newRow.style.height = "18px";
+  document.getElementById("download-excel").addEventListener("click", function () {
+    const table = document.getElementById("realtime-data");
+    const rows = Array.from(table.querySelectorAll("thead tr, tbody tr"));
+    const matrix = [];
+    const merges = [];
 
-    const now = new Date();
-    const date = now.toLocaleDateString("en-GB").replace(/\//g, "-");
-    const time = now.toTimeString().split(" ")[0].slice(0, 5);
+    const getCellStyle = (td, isHeader = false, colIndex = 0) => {
+      const align = isHeader
+        ? 'center'
+        : (colIndex >= 3 ? 'right' : 'left');
 
-    const initialColumns = [
-      `<td>${date}</td>`,
-      `<td>${time}</td>`,
-      `<td></td>`,
-      `<td><input type="text" class="content-input text-end" value=""></td>`,
-      `<td><input type="text" class="content-input text-end" value=""></td>`
-    ];
-    let rowHtml = initialColumns.join("");
+      const valign = window.getComputedStyle(td).verticalAlign || "bottom";
 
-    const annotationRow = Array.from(document.querySelectorAll("#realtime-data thead tr")).find(row => {
-      return Array.from(row.children).some(cell =>
-        cell.classList.contains("sensor") ||
-        cell.classList.contains("calculated") ||
-        cell.classList.contains("manual")
-      );
-    });
+      const style = {
+        font: { name: 'Tahoma', sz: isHeader ? 10 : 11, bold: isHeader },
+        alignment: {
+          horizontal: align,
+          vertical: valign === "middle" ? "center" : valign
+        },
+        border: {
+          top: { style: 'thin', color: { rgb: '000000' } },
+          bottom: { style: 'thin', color: { rgb: '000000' } },
+          left: { style: 'thin', color: { rgb: '000000' } },
+          right: { style: 'thin', color: { rgb: '000000' } }
+        }
+      };
 
-    if (!annotationRow) {
-      console.warn("⚠️ Annotation row not found.");
-      return;
-    }
-
-    const cells = annotationRow.querySelectorAll("td, th");
-    cells.forEach(cell => {
-      const annotation = cell.innerText.trim();
-      const mapping = realtimeMappings.find(m => m.annotation === annotation);
-
-      if (mapping) {
-        const liveValue = getValueFromAddressTable(mapping.value);
-        rowHtml += `<td><input type="text" class="content-input text-end" value="${liveValue || ""}"></td>`;
-      } else {
-        rowHtml += `<td><input type="text" class="content-input text-end" value=""></td>`;
+      if (isHeader) {
+        style.fill = {
+          type: 'pattern',
+          patternType: 'solid',
+          fgColor: { rgb: 'EEF0F7' }
+        };
       }
+
+      return style;
+    };
+
+    let rowIndex = 0;
+
+    rows.forEach(tr => {
+      const isHeader = tr.closest("thead") !== null;
+      const cells = Array.from(tr.children);
+      matrix[rowIndex] = matrix[rowIndex] || [];
+
+      let colIndex = 0;
+      for (let i = 0; i < cells.length; i++) {
+        const td = cells[i];
+
+        // Skip cells already filled due to rowspan/colspan
+        while (matrix[rowIndex][colIndex] !== undefined) colIndex++;
+
+        const value = (() => {
+          const input = td.querySelector("input");
+          if (input) return input.value.trim();
+          const select = td.querySelector("select");
+          if (select) return select.options[select.selectedIndex]?.text || "";
+          return td.innerText.trim();
+        })();
+
+        const rowspan = parseInt(td.getAttribute("rowspan") || "1", 10);
+        const colspan = parseInt(td.getAttribute("colspan") || "1", 10);
+
+        const cellObj = {
+          v: value,
+          t: 's',
+          s: getCellStyle(td, isHeader, colIndex)
+        };
+
+        // Place main cell and fill rest with null (merged)
+        for (let r = 0; r < rowspan; r++) {
+          for (let c = 0; c < colspan; c++) {
+            const ri = rowIndex + r;
+            const ci = colIndex + c;
+            matrix[ri] = matrix[ri] || [];
+            matrix[ri][ci] = (r === 0 && c === 0)
+              ? cellObj
+              : {
+                v: '',
+                t: 's',
+                s: getCellStyle(td, isHeader, ci)
+              };
+          }
+        }
+
+        if (rowspan > 1 || colspan > 1) {
+          merges.push({
+            s: { r: rowIndex, c: colIndex },
+            e: { r: rowIndex + rowspan - 1, c: colIndex + colspan - 1 }
+          });
+        }
+
+        colIndex += colspan;
+      }
+
+      rowIndex++;
     });
 
-    newRow.innerHTML = rowHtml;
-    tbody.appendChild(newRow);
-  }
+    // Build worksheet
+    const ws = XLSX.utils.aoa_to_sheet(matrix);
+    ws['!merges'] = merges;
+    ws['!rows'] = matrix.map(() => ({ hpt: 18 }));
+    const maxCols = Math.max(...matrix.map(r => r.length));
+    ws['!cols'] = Array(maxCols).fill({ wpx: 120 });
+
+    // File name with timestamp
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const timestamp = `${pad(now.getDate())}-${now.toLocaleString('en-US', { month: 'short' })}-${now.getFullYear()} ${pad(now.getHours())}-${pad(now.getMinutes())}`;
+    const filename = `realtime-data-${timestamp}.xlsx`;
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Realtime Data");
+    XLSX.writeFile(wb, filename);
+  });
 
   document.getElementById("download-pdf").addEventListener("click", function () {
     const contentElement = document.getElementById("pdf-content");
 
     // Create loader if not already present
     if (!document.getElementById("pdf-loader")) {
-        const loader = document.createElement("div");
-        loader.id = "pdf-loader";
-        loader.innerText = "Generating PDF, please wait...";
+      const loader = document.createElement("div");
+      loader.id = "pdf-loader";
+      loader.innerText = "Generating PDF, please wait...";
 
-        Object.assign(loader.style, {
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "#fff",
-            padding: "1rem 2rem",
-            zIndex: "1000",
-            border: "1px solid #ccc",
-            pointerEvents: "none",
-            fontSize: "14px"
-        });
+      Object.assign(loader.style, {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "#fff",
+        padding: "1rem 2rem",
+        zIndex: "1000",
+        border: "1px solid #ccc",
+        pointerEvents: "none",
+        fontSize: "14px"
+      });
 
-        contentElement.style.position = "relative";
-        contentElement.appendChild(loader);
+      contentElement.style.position = "relative";
+      contentElement.appendChild(loader);
     }
 
     // Clone content and remove loader before printing
@@ -1070,32 +1231,32 @@ document.addEventListener("DOMContentLoaded", function () {
     if (loaderInClone) loaderInClone.remove(); // Ensure loader is not included in PDF
 
     setTimeout(() => {
-        const opt = {
-            margin: [0.5, 0.5, 0.5, 0.5],
-            filename: 'realtime-data.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: {
-                scale: 2,
-                scrollY: 0,
-                useCORS: true
-            },
-            jsPDF: {
-                unit: 'in',
-                format: 'a4', // Larger format for wide tables
-                orientation: 'landscape'
-            }
-        };
+      const opt = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        filename: 'realtime-data.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          scrollY: 0,
+          useCORS: true
+        },
+        jsPDF: {
+          unit: 'in',
+          format: 'a4', // Larger format for wide tables
+          orientation: 'landscape'
+        }
+      };
 
-        html2pdf()
-            .set(opt)
-            .from(clonedElement)
-            .save()
-            .finally(() => {
-                document.getElementById("pdf-loader")?.remove();
-                contentElement.style.position = ""; // Clean up
-            });
+      html2pdf()
+        .set(opt)
+        .from(clonedElement)
+        .save()
+        .finally(() => {
+          document.getElementById("pdf-loader")?.remove();
+          contentElement.style.position = ""; // Clean up
+        });
     }, 100);
-});
+  });
 
   // Hide and show text inputs on toggle of checkbox on sensor mapping page
   document.querySelectorAll(".form-check-input[type='checkbox']").forEach((checkbox) => {

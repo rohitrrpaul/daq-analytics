@@ -1679,10 +1679,10 @@
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                 <h4 class="mb-sm-0">Real Time Data</h4>
                                 <div>
-                                    <button id="start-realtime" class="btn btn-sm btn-success">Start</button>
-                                    <button id="stop-realtime" class="btn btn-sm btn-danger">Stop</button>
-                                    <button class="btn btn-sm btn-info d-inline-flex align-items-center" id="download-pdf"><i
-                                            class="ph ph-download fs-5 me-1"></i> Download PDF</button>
+                                    <button id="start-realtime" class="btn btn-sm btn-info">Start</button>
+                                    <button id="stop-realtime" class="btn btn-sm btn-info">Stop</button>
+                                    <button class="btn btn-sm btn-success d-inline-flex align-items-center" id="download-excel"><i class="ph ph-file-xls fs-5 me-1"></i> Download Excel</button>
+                                    <button class="btn btn-sm btn-danger d-inline-flex align-items-center" id="download-pdf"><i class="ph ph-file-pdf fs-5 me-1"></i> Download PDF</button>
                                 </div>
                             </div>
                         </div>
@@ -1691,7 +1691,7 @@
                         <div class="card-body">
                             <div class="realTimeData-table table-responsive">
                                 <div class="table-wrapper" id="pdf-content">
-                                    <table class="table table-nowrap table-bordered">
+                                    <table class="table table-nowrap table-bordered" id="realtime-table">
                                         <thead>
                                             <tr style="height: 23px" class="table-light">
 
@@ -2853,6 +2853,7 @@
     <script src="assets/js/lineRace-chart.js"></script>
     <script src="./renderer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.min.js"></script>
 
 </body>
 
