@@ -1,0 +1,3 @@
+Give Permission - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+Build exe - npx electron-packager . DAQ-Analytics --platform=win32 --arch=x64 --out=dist --overwrite
+Build win exe - npm run dist
