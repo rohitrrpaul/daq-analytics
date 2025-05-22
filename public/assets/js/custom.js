@@ -1275,37 +1275,112 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // On "Check Values" button click
+  // document.getElementById("check_value")?.addEventListener("click", async function () {
+  //   const checkboxes = document.querySelectorAll("input.form-check-input");
+  //   const sensorData = {};
+  //   const checkedSensors = {};
+
+  //   let missingValue = false;
+  //   let missingLabel = "";
+
+  //   // First, collect all checkboxes state and data
+  //   checkboxes.forEach((checkbox) => {
+  //     const wrapper = checkbox.closest(".form-check");
+  //     const input = wrapper.querySelector(".input-wrapper")?.querySelector("input");
+  //     const checkboxId = checkbox.id;
+
+  //     if (!input) return;
+
+  //     const params = JSON.parse(input.dataset.params || "{}");
+  //     const value = input.value.trim();
+  //     const isChecked = checkbox.checked;
+
+  //     // Store the checked state
+  //     checkedSensors[checkboxId] = isChecked;
+
+  //     // If checked, validate and store the data
+  //     if (isChecked) {
+  //       if (!value) {
+  //         console.log(`✅ ${checkboxId} → Checked: ${isChecked}, Value: "${value}"`);
+          
+  //         missingValue = true;
+  //         missingLabel = params.long || "Unnamed Sensor";
+  //         return;
+  //       }
+
+  //       sensorData[checkboxId] = {
+  //         unit: params.unit || "",
+  //         long: params.long || "",
+  //         annotation: params.annotation || "",
+  //         value: value
+  //       };
+  //     }
+  //   });
+
+  //   if (missingValue) {
+  //     showToast(`Please enter a value for "${missingLabel}"`, "danger");
+  //     return;
+  //   }
+
+  //   if (Object.keys(checkedSensors).length === 0) {
+  //     showToast("No sensors selected.", "danger");
+  //     return;
+  //   }
+
+  //   try {
+  //     if (!currentProjectId) {
+  //       showToast("No project selected. Please select a project first.", "danger");
+  //       return;
+  //     }
+
+  //     // Save the sensor mappings
+  //     const result = await window.electron.saveSensorMappings(currentProjectId, sensorData, checkedSensors);
+
+  //     if (result.success) {
+  //       showToast("Sensor mappings saved successfully!", "success");
+  //       // console.log("✅ Sensor mappings saved:", { sensorData, checkedSensors });
+  //     } else {
+  //       showToast("Failed to save sensor mappings.", "danger");
+  //     }
+  //   } catch (error) {
+  //     // console.error("Error saving sensor mappings:", error);
+  //     showToast("Error saving sensor mappings: " + error.message, "danger");
+  //   }
+  // });
+
   document.getElementById("check_value")?.addEventListener("click", async function () {
     const checkboxes = document.querySelectorAll("input.form-check-input");
     const sensorData = {};
     const checkedSensors = {};
-
-    let missingValue = false;
-    let missingLabel = "";
-
-    // First, collect all checkboxes state and data
+    let firstMissingSensor = null;
+  
     checkboxes.forEach((checkbox) => {
       const wrapper = checkbox.closest(".form-check");
-      const input = wrapper.querySelector(".input-wrapper input");
+      const inputWrapper = wrapper?.querySelector(".input-wrapper");
+      const input = inputWrapper?.querySelector("input");
       const checkboxId = checkbox.id;
-
+  
       if (!input) return;
-
-      const params = JSON.parse(input.dataset.params || "{}");
+  
+      let params = {};
+      try {
+        params = JSON.parse(input.dataset.params || "{}");
+      } catch (err) {
+        console.error("Invalid data-params JSON for checkbox:", checkboxId, err);
+        return;
+      }
+  
       const value = input.value.trim();
       const isChecked = checkbox.checked;
-
-      // Store the checked state
+  
       checkedSensors[checkboxId] = isChecked;
-
-      // If checked, validate and store the data
+  
       if (isChecked) {
-        if (!value) {
-          missingValue = true;
-          missingLabel = params.long || "Unnamed Sensor";
+        if (!value && !firstMissingSensor) {
+          firstMissingSensor = params.long || "Unnamed Sensor";
           return;
         }
-
+  
         sensorData[checkboxId] = {
           unit: params.unit || "",
           long: params.long || "",
@@ -1314,37 +1389,36 @@ document.addEventListener("DOMContentLoaded", function () {
         };
       }
     });
-
-    if (missingValue) {
-      showToast(`Please enter a value for "${missingLabel}"`, "danger");
+  
+    // ✅ Always show this AFTER full loop
+    if (firstMissingSensor) {
+      showToast(`Please enter a value for "${firstMissingSensor}"`, "danger");
       return;
     }
-
-    if (Object.keys(checkedSensors).length === 0) {
+  
+    if (Object.values(checkedSensors).filter(Boolean).length === 0) {
       showToast("No sensors selected.", "danger");
       return;
     }
-
+  
     try {
       if (!currentProjectId) {
         showToast("No project selected. Please select a project first.", "danger");
         return;
       }
-
-      // Save the sensor mappings
+  
       const result = await window.electron.saveSensorMappings(currentProjectId, sensorData, checkedSensors);
-
+  
       if (result.success) {
         showToast("Sensor mappings saved successfully!", "success");
-        // console.log("✅ Sensor mappings saved:", { sensorData, checkedSensors });
       } else {
         showToast("Failed to save sensor mappings.", "danger");
       }
     } catch (error) {
-      // console.error("Error saving sensor mappings:", error);
       showToast("Error saving sensor mappings: " + error.message, "danger");
     }
-  });
+
+  });  
 
   /* Show login screen on app launch */
 

@@ -1061,6 +1061,18 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Sand Filter Differential Pressure Sensor -->
+                                            <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                <input class="form-check-input" type="checkbox" id="sandQuantity">
+                                                <label class="form-check-label" for="sandQuantity">Sand Quantity</label>
+                                                <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                    <input type="number" class="form-control" min="0"
+                                                        data-params='{"unit": "psi", "long": "Sand Quantity", "annotation": "Sand Qty."}'
+                                                        placeholder="Enter Address">
+                                                </div>
+                                            </div>
+                                        </div>
                                         </div>
                                         <div class="sensor-block">
                                             <h4 class="card-title fs-5 mb-3">Data Header Upstream of Choke Manifold</h4>
@@ -1478,6 +1490,16 @@
                                             <h4 class="card-title fs-5 mb-3">Separator</h4>
                                             <div class="row">
 
+                                                <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                    <input class="form-check-input" type="checkbox" id="gasFlowComputer">
+                                                    <label class="form-check-label" for="gasFlowComputer">Gas Flow Computer</label>
+                                                    <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                        <input type="number" class="form-control" min="0"
+                                                            data-params='{"unit": "bpd", "long": "Gas Flow Computer", "annotation": "Gas Flow. Comp."}'
+                                                            placeholder="Enter Address">
+                                                    </div>
+                                                </div>
+
                                                 <!-- Static Pressure -->
                                                 <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
                                                     <input class="form-check-input" type="checkbox" id="sepPressure">
@@ -1621,6 +1643,17 @@
                                                             placeholder="Enter Address">
                                                     </div>
                                                 </div>
+
+                                                <!-- Gas Flow Computer
+                                                <div class="col-md-4 col-lg-3 form-check mb-1 form-check-success">
+                                                    <input class="form-check-input" type="checkbox" id="liqCumVol">
+                                                    <label class="form-check-label" for="liqCumVol">Gas Flow Computer</label>
+                                                    <div class="input-wrapper" style="display: none; margin-top: 4px;">
+                                                        <input type="number" class="form-control" min="0"
+                                                            data-params='{"unit": "bpd", "long": "Gas Flow Computer", "annotation": "Gas Flow. Comp."}'
+                                                            placeholder="Enter Address">
+                                                    </div>
+                                                </div> -->
 
                                             </div>
                                         </div>
@@ -1771,7 +1804,7 @@
                                                 <td class="manual">Orfice Size</td>
                                                 <td class="calculated">Gas Flow. Ra.</td>
                                                 <td class="calculated">Cumm. Gas VoL.</td>
-                                                <td class="sensor">Gas Flow. Ra.</td>
+                                                <td class="sensor">Gas Flow. Comp.</td>
                                                 <td class="manual">CO2 Content</td>
                                                 <td class="manual">H2S Content</td>
                                                 <td class="manual">SG of Gas</td>
